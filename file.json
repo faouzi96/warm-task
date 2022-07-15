@@ -1,0 +1,171 @@
+{
+  "length": 3,
+  "lastBlock": {
+    "cause": null,
+    "stackTrace": [
+      {
+        "classLoaderName": "app",
+        "moduleName": null,
+        "moduleVersion": null,
+        "methodName": "main",
+        "fileName": "Main.java",
+        "lineNumber": 39,
+        "nativeMethod": false,
+        "className": "blockchainPackage.Main"
+      }
+    ],
+    "prevHash": "9bc4d4b1b0dbf293fe6aa59c135b1d771cd8d05e08ab66e964266aec203ad6e1",
+    "hash": "15ea096bc282b9e039ceebdebd6fa77a16242d5d7d3fcba02de9d385b85505c8",
+    "listTransaction": [
+      {
+        "sender": "JAJA",
+        "receiver": "HAHA",
+        "amount": 20.0,
+        "timestamp": "2022-07-15T17:27:11.417433900Z"
+      }
+    ],
+    "message": null,
+    "suppressed": [],
+    "localizedMessage": null
+  },
+  "genesisBlock": {
+    "cause": null,
+    "stackTrace": [
+      {
+        "classLoaderName": "app",
+        "moduleName": null,
+        "moduleVersion": null,
+        "methodName": "<init>",
+        "fileName": "Blockchain.java",
+        "lineNumber": 9,
+        "nativeMethod": false,
+        "className": "blockchainPackage.Blockchain"
+      },
+      {
+        "classLoaderName": "app",
+        "moduleName": null,
+        "moduleVersion": null,
+        "methodName": "main",
+        "fileName": "Main.java",
+        "lineNumber": 22,
+        "nativeMethod": false,
+        "className": "blockchainPackage.Main"
+      }
+    ],
+    "prevHash": null,
+    "hash": "3d1385958c101b3e698b8cbcde2a4c659f85c7d4df505ab2abc57d8a10b37611",
+    "listTransaction": [
+      {
+        "sender": null,
+        "receiver": null,
+        "amount": 10000.0,
+        "timestamp": "2022-07-15T17:27:11.275148600Z"
+      }
+    ],
+    "message": null,
+    "suppressed": [],
+    "localizedMessage": null
+  },
+  "allBlocks": [
+    {
+      "cause": null,
+      "stackTrace": [
+        {
+          "classLoaderName": "app",
+          "moduleName": null,
+          "moduleVersion": null,
+          "methodName": "<init>",
+          "fileName": "Blockchain.java",
+          "lineNumber": 9,
+          "nativeMethod": false,
+          "className": "blockchainPackage.Blockchain"
+        },
+        {
+          "classLoaderName": "app",
+          "moduleName": null,
+          "moduleVersion": null,
+          "methodName": "main",
+          "fileName": "Main.java",
+          "lineNumber": 22,
+          "nativeMethod": false,
+          "className": "blockchainPackage.Main"
+        }
+      ],
+      "prevHash": null,
+      "hash": "3d1385958c101b3e698b8cbcde2a4c659f85c7d4df505ab2abc57d8a10b37611",
+      "listTransaction": [
+        {
+          "sender": null,
+          "receiver": null,
+          "amount": 10000.0,
+          "timestamp": "2022-07-15T17:27:11.275148600Z"
+        }
+      ],
+      "message": null,
+      "suppressed": [],
+      "localizedMessage": null
+    },
+    {
+      "cause": null,
+      "stackTrace": [
+        {
+          "classLoaderName": "app",
+          "moduleName": null,
+          "moduleVersion": null,
+          "methodName": "main",
+          "fileName": "Main.java",
+          "lineNumber": 34,
+          "nativeMethod": false,
+          "className": "blockchainPackage.Main"
+        }
+      ],
+      "prevHash": "3d1385958c101b3e698b8cbcde2a4c659f85c7d4df505ab2abc57d8a10b37611",
+      "hash": "9bc4d4b1b0dbf293fe6aa59c135b1d771cd8d05e08ab66e964266aec203ad6e1",
+      "listTransaction": [
+        {
+          "sender": "JAJA",
+          "receiver": "DADA",
+          "amount": 100.0,
+          "timestamp": "2022-07-15T17:27:11.416438100Z"
+        },
+        {
+          "sender": "DADA",
+          "receiver": "JAJA",
+          "amount": 10.0,
+          "timestamp": "2022-07-15T17:27:11.416438100Z"
+        }
+      ],
+      "message": null,
+      "suppressed": [],
+      "localizedMessage": null
+    },
+    {
+      "cause": null,
+      "stackTrace": [
+        {
+          "classLoaderName": "app",
+          "moduleName": null,
+          "moduleVersion": null,
+          "methodName": "main",
+          "fileName": "Main.java",
+          "lineNumber": 39,
+          "nativeMethod": false,
+          "className": "blockchainPackage.Main"
+        }
+      ],
+      "prevHash": "9bc4d4b1b0dbf293fe6aa59c135b1d771cd8d05e08ab66e964266aec203ad6e1",
+      "hash": "15ea096bc282b9e039ceebdebd6fa77a16242d5d7d3fcba02de9d385b85505c8",
+      "listTransaction": [
+        {
+          "sender": "JAJA",
+          "receiver": "HAHA",
+          "amount": 20.0,
+          "timestamp": "2022-07-15T17:27:11.417433900Z"
+        }
+      ],
+      "message": null,
+      "suppressed": [],
+      "localizedMessage": null
+    }
+  ]
+}
