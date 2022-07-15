@@ -1,7 +1,8 @@
 package blockchainPackage;
-/*
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,16 +14,15 @@ public class JsonFileManager {
 
     // Serialize our object and write into a file using the filePath path, and finally
     // Return a string with the content of our file
-    public static String serialization(String filePath,Object object) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(object);
-        return writeJsonFile(filePath,json);
+    public static void serialization(String filePath,Blockchain object) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(new File(filePath+"target/blockchain.json"),object);
     }
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
-    public static Object deserialization(String filePath, Class className) throws FileNotFoundException {
-        Gson gson = new Gson();
-        return gson.fromJson(readJsonFile(filePath), className);
+    public static Object deserialization(String filePath, Class className) throws FileNotFoundException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(readJsonFile(filePath+"target/blockchain.json"), className);
     }
 
     // Read the JSON file from our disk using the PathFile parameter
@@ -32,9 +32,10 @@ public class JsonFileManager {
             Scanner myReader = new Scanner(myData);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                json.concat(data);
+                json += data;
             }
             myReader.close();
+            System.out.println(json);
             return json;
     }
 
@@ -47,4 +48,3 @@ public class JsonFileManager {
         return json;
     }
 }
-*/

@@ -21,8 +21,6 @@ public class Main {
 
         Blockchain blockchain = new Blockchain();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
 
         Block genesisBlock = blockchain.getGenesisBlock();
         System.out.println("Genesis block hash: " + genesisBlock.getHash());
@@ -38,12 +36,12 @@ public class Main {
 
         Block block2 = new Block(firstUser.send(20.0, thirdUser));
         blockchain.addBlock(block2);
-        objectMapper.writeValue(new File("file.json"),blockchain);
         System.out.println("Block hash: "+blockchain.getLastBlock().getHash());
         System.out.println("Previous Block hash: "+blockchain.getLastBlock().getPrevHash());
-
-
-        ArrayList<Transaction> userTransaction = firstUser.getListTransaction();
+        JsonFileManager.serialization("",blockchain);
+        Blockchain b = (Blockchain) JsonFileManager.deserialization("",Blockchain.class);
+        System.out.println(b.getLastBlock());
+        ArrayList<Transaction> userTransaction = thirdUser.getListTransaction();
 
         for (int i = 0; i < userTransaction.size(); i++) {
             System.out.println(userTransaction.get(i).getSender());
