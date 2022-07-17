@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class Wallet {
     double amount;
     ArrayList<Transaction> transactions = new ArrayList<>();
+    public Wallet(double amount, User user){
+        this.transactions.add(new Transaction(null, user, amount));
+        this.amount = amount;
+    }
     public Wallet(double amount){
         this.amount = amount;
     }

@@ -38,10 +38,8 @@ public class Main {
         blockchain.addBlock(block2);
         System.out.println("Block hash: "+blockchain.getLastBlock().getHash());
         System.out.println("Previous Block hash: "+blockchain.getLastBlock().getPrevHash());
-        JsonFileManager.serialization("",blockchain);
-        Blockchain b = (Blockchain) JsonFileManager.deserialization("",Blockchain.class);
-        System.out.println(b.getLastBlock());
-        ArrayList<Transaction> userTransaction = thirdUser.getListTransaction();
+
+        ArrayList<Transaction> userTransaction = firstUser.getListTransaction();
 
         for (int i = 0; i < userTransaction.size(); i++) {
             System.out.println(userTransaction.get(i).getSender());

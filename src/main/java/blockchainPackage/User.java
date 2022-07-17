@@ -15,7 +15,7 @@ public class User {
     @JsonCreator
     public User(String name, double amount){
         this.name=name;
-        this.wallet = new Wallet(amount);
+        this.wallet = new Wallet(amount, this);
     }
     @JsonCreator
     public User(String name){
