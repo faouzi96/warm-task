@@ -6,31 +6,38 @@ import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 
 public class Blockchain {
-    @JsonProperty
+
     private LinkedList<Block> blocks = new LinkedList<>();
-    @JsonCreator
+
     public Blockchain() throws NoSuchAlgorithmException {
         blocks.add(new Block(new Transaction(null,null,10000.0)));
     }
-    @JsonGetter
-
     public Block getGenesisBlock(){
         return this.blocks.getFirst();
     }
-    @JsonGetter
     public LinkedList<Block> getAllBlocks(){
         return this.blocks;
     }
-    @JsonGetter
     public Block getLastBlock(){
         return this.blocks.getLast();
     }
-    @JsonGetter
     public int getLength(){
         return this.blocks.size();
     }
-
-    @JsonAnySetter
+    public Block getBlock(String hash){
+        for (Block block:this.blocks) {
+            if(block.getHash() == hash){
+                return block;
+            }
+        }
+        return null;
+    }
+    public Block getBlock(int height){
+        for (int i = 0; i < this.blocks.size(); i++) {
+            if (i == height) return this.blocks.get(i);
+        }
+        return null;
+    }
     public void addBlock(Block block){
         block.setPrevHash(this.getLastBlock().getHash());
         this.blocks.add(block);

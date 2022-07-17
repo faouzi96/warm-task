@@ -21,21 +21,22 @@ public class Main {
 
         Blockchain blockchain = new Blockchain();
 
+        BlockchainExplorer.printGenesisBlock(blockchain);
 
-        Block genesisBlock = blockchain.getGenesisBlock();
-        System.out.println("Genesis block hash: " + genesisBlock.getHash());
-
-        User firstUser = new User("JAJA",genesisBlock.getListTransaction().get(0).getAmount());
+        User firstUser = new User("JAJA",blockchain.getGenesisBlock().getListTransaction().get(0).getAmount());
+        Block block1 = new Block(firstUser.getListTransaction().get(0));
         User secondUser = new User("DADA");
         User thirdUser = new User("HAHA");
 
-        Block block1 = new Block(firstUser.send(100.0,secondUser));
+        block1.addTransaction(firstUser.send(100.0,secondUser));
         block1.addTransaction(secondUser.send(10.0,firstUser));
         blockchain.addBlock(block1);
-        Block block = blockchain.getLastBlock();
 
         Block block2 = new Block(firstUser.send(20.0, thirdUser));
         blockchain.addBlock(block2);
+        BlockchainExplorer.printBlockchainDetails(blockchain);
+        BlockchainExplorer.printBlockDetails(1,blockchain);
+   /*
         System.out.println("Block hash: "+blockchain.getLastBlock().getHash());
         System.out.println("Previous Block hash: "+blockchain.getLastBlock().getPrevHash());
 
@@ -47,5 +48,7 @@ public class Main {
             System.out.println(userTransaction.get(i).getTimestamp());
             System.out.println(userTransaction.get(i).getAmount());
         }
+
+    */
     }
 }
