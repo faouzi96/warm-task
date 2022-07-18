@@ -8,19 +8,20 @@ public class User {
 
     private String name;
 
-    private Wallet wallet;
-
-    private String hash;
-
+    private double amount;
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public User(String name, double amount){
         this.name=name;
-        this.wallet = new Wallet(amount, this);
+        this.transactions.add(new Transaction(null, this, amount));
+        this.amount = amount;
+        Wallet.addUserWallet(this);
     }
 
     public User(String name){
         this.name=name;
-        this.wallet = new Wallet(0.0);
+        this.amount = 0.0;
+        Wallet.addUserWallet(this);
     }
 
     public String getName(){
@@ -28,26 +29,26 @@ public class User {
     }
 
     public double getAmount(){
-        return this.wallet.getAmount();
+        return this.amount;
     }
 
     private void receive(Transaction transaction) {
-        this.wallet.addAmount(transaction.getAmount());
-        this.wallet.addTransaction(transaction);
+        this.amount = transaction.getAmount();
+        this.transactions.add(transaction);
     }
 
     public Transaction send(double amount, User receiver){
-        if(this.wallet.amount < amount) return null;
+        if(this.amount < amount) return null;
         else{
             Transaction transaction = new Transaction(this,receiver, amount);
             receiver.receive(transaction);
-            this.wallet.subAmount(amount);
-            this.wallet.addTransaction(transaction);
+            this.amount -= amount;
+            this.transactions.add(transaction);
             return transaction;
         }
     }
 
     public ArrayList<Transaction> getListTransaction(){
-        return this.wallet.getListTransactions();
+        return this.transactions;
     }
 }

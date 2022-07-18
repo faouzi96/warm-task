@@ -18,13 +18,14 @@ public class Main {
 
         SimpleObj obj = new SimpleObj();
 
-
+        ArrayList<User> users = new ArrayList<>();
         Blockchain blockchain = new Blockchain();
 
         BlockchainExplorer.printGenesisBlock(blockchain);
 
         User firstUser = new User("JAJA",blockchain.getGenesisBlock().getListTransaction().get(0).getAmount());
         Block block1 = new Block(firstUser.getListTransaction().get(0));
+
         User secondUser = new User("DADA");
         User thirdUser = new User("HAHA");
 
@@ -36,7 +37,9 @@ public class Main {
         blockchain.addBlock(block2);
         BlockchainExplorer.printBlockchainDetails(blockchain);
         BlockchainExplorer.printBlockDetails(1,blockchain);
-   /*
+
+        Wallet.printUserListTransactions("DADA");
+        /*
         System.out.println("Block hash: "+blockchain.getLastBlock().getHash());
         System.out.println("Previous Block hash: "+blockchain.getLastBlock().getPrevHash());
 

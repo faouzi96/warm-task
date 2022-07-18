@@ -3,28 +3,60 @@ package blockchainPackage;
 import java.util.ArrayList;
 
 public class Wallet {
-    double amount;
-    ArrayList<Transaction> transactions = new ArrayList<>();
-    public Wallet(double amount, User user){
-        this.transactions.add(new Transaction(null, user, amount));
-        this.amount = amount;
+    private static ArrayList<User> users = new ArrayList<>();
+    public static void printAmount(String username){
+        boolean b = false;
+        for (User user:users) {
+             if(user.getName().equals(username)) {
+                 System.out.println("________________________________________________");
+                 System.out.println("User: " + username);
+                 System.out.println("Amount: "+ user.getAmount());
+                 System.out.println("________________________________________________");
+                 b = true;
+             }
+        }
+        if(!b){
+            System.out.println("________________________________________________");
+            System.out.println("User: " + username);
+            System.out.println("User not found");
+            System.out.println("________________________________________________");
+        }
     }
-    public Wallet(double amount){
-        this.amount = amount;
+
+    public static void addUserWallet(User user){
+        users.add(user);
     }
-    public double getAmount(){
-        return this.amount;
+    public static void printUserListTransactions(String username){
+        boolean b = false;
+        for (User user:users) {
+            if(user.getName().equals(username)){
+                ArrayList<Transaction> transactions = user.getListTransaction();
+                System.out.println("_____________________________________________________________");
+                System.out.println("Transactions of the user: " + username);
+                for (Transaction transaction: transactions) {
+                    System.out.println("\t - Transaction:____________________________________");
+                    System.out.println("\t\t - Timestamp: " + transaction.getTimestamp());
+                    System.out.println("\t\t - Sender: " + transaction.getSender());
+                    System.out.println("\t\t - Receiver: " + transaction.getReceiver());
+                    System.out.println("\t\t - Amount: " + transaction.getAmount());
+                    System.out.println("\t\t __________________________________________________");
+                }
+                System.out.println("_____________________________________________________________");
+                b=true;
+            }
+        }
+        if(!b){
+            System.out.println("________________________________________________");
+            System.out.println("User: " + username);
+            System.out.println("User not found");
+            System.out.println("________________________________________________");
+        }
     }
-    public void addTransaction(Transaction transaction){
-        this.transactions.add(transaction);
-    }
-    public void addAmount(double amount){
-        this.amount += amount;
-    }
-    public void subAmount(double amount){
-        this.amount -= amount;
-    }
-    public ArrayList<Transaction> getListTransactions(){
-        return this.transactions;
+
+    public static boolean checkUserExistence(String username){
+        for (User user:users) {
+            if(user.getName().equals(username)) return true;
+        }
+        return false;
     }
 }
