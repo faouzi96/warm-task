@@ -1,11 +1,14 @@
 package blockchainPackage;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class JsonFileManager {
@@ -13,9 +16,14 @@ public class JsonFileManager {
     // Serialize our object and write into a file using the filePath path, and finally
     // Return a string with the content of our file
     public static void serialization(String filePath,Blockchain object) throws IOException {
-        Gson gson = new Gson();
+
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(ArrayList.class, new ArrayList<>());
+        gsonBuilder.registerTypeAdapter(LinkedList.class, new LinkedList<>());
+        Gson gson = gsonBuilder.setPrettyPrinting().create();
         String json = gson.toJson(object);
-        writeJsonFile("target/blockchain.json",json);
+        System.out.print(json);
     }
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one

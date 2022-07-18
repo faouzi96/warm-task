@@ -30,7 +30,7 @@ public class Main {
 
         Wallet.printUserListTransactions("HAHA");
 
-        BlockchainExplorer.printBlockDetails("e22888f2332bcc2baf79913b244678b809c1dbf645f8781e566093000853613f",blockchain);
+        BlockchainExplorer.printBlockDetails("fc48c0ddb84d4301c1e823625bca72fbb927f2ddb7ebe743e99e3dfd96c0e621",blockchain);
         JsonFileManager.serialization("..",blockchain);
     }
 }
