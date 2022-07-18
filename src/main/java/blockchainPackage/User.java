@@ -1,7 +1,5 @@
 package blockchainPackage;
 
-import com.fasterxml.jackson.annotation.*;
-
 import java.util.ArrayList;
 
 public class User {

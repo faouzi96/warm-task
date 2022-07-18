@@ -1,11 +1,12 @@
 package blockchainPackage;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 public class Main {
 
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
 
         Blockchain blockchain = new Blockchain();
@@ -30,6 +31,6 @@ public class Main {
         Wallet.printUserListTransactions("HAHA");
 
         BlockchainExplorer.printBlockDetails("e22888f2332bcc2baf79913b244678b809c1dbf645f8781e566093000853613f",blockchain);
-
+        JsonFileManager.serialization("..",blockchain);
     }
 }
