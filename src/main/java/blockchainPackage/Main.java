@@ -16,12 +16,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 
-        SimpleObj obj = new SimpleObj();
 
-        ArrayList<User> users = new ArrayList<>();
         Blockchain blockchain = new Blockchain();
 
-        BlockchainExplorer.printGenesisBlock(blockchain);
+       // BlockchainExplorer.printGenesisBlock(blockchain);
 
         User firstUser = new User("JAJA",blockchain.getGenesisBlock().getListTransaction().get(0).getAmount());
         Block block1 = new Block(firstUser.getListTransaction().get(0));
@@ -35,23 +33,12 @@ public class Main {
 
         Block block2 = new Block(firstUser.send(20.0, thirdUser));
         blockchain.addBlock(block2);
-        BlockchainExplorer.printBlockchainDetails(blockchain);
-        BlockchainExplorer.printBlockDetails(1,blockchain);
+     //   BlockchainExplorer.printBlockchainDetails(blockchain);
+     //   BlockchainExplorer.printBlockDetails(0,blockchain);
 
-        Wallet.printUserListTransactions("DADA");
-        /*
-        System.out.println("Block hash: "+blockchain.getLastBlock().getHash());
-        System.out.println("Previous Block hash: "+blockchain.getLastBlock().getPrevHash());
+        Wallet.printAmount("JAJA");
 
-        ArrayList<Transaction> userTransaction = firstUser.getListTransaction();
+       // BlockchainExplorer.printBlockDetails("e22888f2332bcc2baf79913b244678b809c1dbf645f8781e566093000853613f",blockchain);
 
-        for (int i = 0; i < userTransaction.size(); i++) {
-            System.out.println(userTransaction.get(i).getSender());
-            System.out.println(userTransaction.get(i).getReceiver());
-            System.out.println(userTransaction.get(i).getTimestamp());
-            System.out.println(userTransaction.get(i).getAmount());
-        }
-
-    */
     }
 }

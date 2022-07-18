@@ -26,7 +26,7 @@ public class Blockchain {
     }
     public Block getBlock(String hash){
         for (Block block:this.blocks) {
-            if(block.getHash() == hash){
+            if(block.getHash().equals(hash)){
                 return block;
             }
         }
