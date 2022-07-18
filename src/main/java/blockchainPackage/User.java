@@ -33,7 +33,7 @@ public class User {
     }
 
     private void receive(Transaction transaction) {
-        this.amount = transaction.getAmount();
+        this.amount += transaction.getAmount();
         this.transactions.add(transaction);
     }
 

@@ -36,7 +36,7 @@ public class Main {
      //   BlockchainExplorer.printBlockchainDetails(blockchain);
      //   BlockchainExplorer.printBlockDetails(0,blockchain);
 
-        Wallet.printAmount("JAJA");
+        Wallet.printUserListTransactions("HAHA");
 
        // BlockchainExplorer.printBlockDetails("e22888f2332bcc2baf79913b244678b809c1dbf645f8781e566093000853613f",blockchain);
 
