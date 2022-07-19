@@ -17,11 +17,13 @@ public class JsonFileManager {
     // Return a string with the content of our file
     public static void serialization(String filePath,Blockchain object) throws IOException {
 
-
+       /*
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ArrayList.class, new ArrayList<>());
         gsonBuilder.registerTypeAdapter(LinkedList.class, new LinkedList<>());
         Gson gson = gsonBuilder.setPrettyPrinting().create();
+        */
+        Gson gson = new Gson();
         String json = gson.toJson(object);
         System.out.print(json);
     }

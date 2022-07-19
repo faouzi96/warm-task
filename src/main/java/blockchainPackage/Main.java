@@ -31,6 +31,6 @@ public class Main {
         Wallet.printUserListTransactions("HAHA");
 
         BlockchainExplorer.printBlockDetails("fc48c0ddb84d4301c1e823625bca72fbb927f2ddb7ebe743e99e3dfd96c0e621",blockchain);
-        JsonFileManager.serialization("..",blockchain);
+        //JsonFileManager.serialization("..",blockchain);
     }
 }

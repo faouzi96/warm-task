@@ -6,7 +6,8 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class BlockchainAdapter extends TypeAdapter {
+public class BlockAdapter extends TypeAdapter {
+
     @Override
     public void write(JsonWriter out, Object value) throws IOException {
 
