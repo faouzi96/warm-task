@@ -24,7 +24,6 @@ public class Block extends Exception{
         this.timeStamp = (Instant.now()).toString();
     }
 
-
     public String getHash(){
         return this.hash;
     }

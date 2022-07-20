@@ -2,6 +2,8 @@ package blockchainPackage;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Main {
 
@@ -11,7 +13,7 @@ public class Main {
 
         Blockchain blockchain = new Blockchain();
 
-        BlockchainExplorer.printGenesisBlock(blockchain);
+       // BlockchainExplorer.printGenesisBlock(blockchain);
 
         User firstUser = new User("JAJA",blockchain.getGenesisBlock().getListTransaction().get(0).getAmount());
         Block block1 = new Block(firstUser.getListTransaction().get(0));
@@ -25,12 +27,18 @@ public class Main {
 
         Block block2 = new Block(firstUser.send(20.0, thirdUser));
         blockchain.addBlock(block2);
-        BlockchainExplorer.printBlockchainDetails(blockchain);
-        BlockchainExplorer.printBlockDetails(0,blockchain);
 
-        Wallet.printUserListTransactions("HAHA");
+        LinkedList<Block> blocks = blockchain.getAllBlocks();
 
-        BlockchainExplorer.printBlockDetails("fc48c0ddb84d4301c1e823625bca72fbb927f2ddb7ebe743e99e3dfd96c0e621",blockchain);
+        String s = JsonFileManager.serialization("",blockchain);
+        System.out.println(JsonFileManager.deserialization("", Blockchain.class));
+
+       // BlockchainExplorer.printBlockchainDetails(blockchain);
+       // BlockchainExplorer.printBlockDetails(0,blockchain);
+
+       // Wallet.printUserListTransactions("HAHA");
+
+       // BlockchainExplorer.printBlockDetails("fc48c0ddb84d4301c1e823625bca72fbb927f2ddb7ebe743e99e3dfd96c0e621",blockchain);
         //JsonFileManager.serialization("..",blockchain);
     }
 }

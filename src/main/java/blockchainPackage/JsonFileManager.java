@@ -2,36 +2,43 @@ package blockchainPackage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class JsonFileManager {
 
     // Serialize our object and write into a file using the filePath path, and finally
     // Return a string with the content of our file
-    public static void serialization(String filePath,Blockchain object) throws IOException {
+    public static String serialization(String filePath,Blockchain object) throws IOException {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Block.class, new BlockAdapter());
 
-       /*
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(ArrayList.class, new ArrayList<>());
-        gsonBuilder.registerTypeAdapter(LinkedList.class, new LinkedList<>());
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
-        */
-        Gson gson = new Gson();
-        String json = gson.toJson(object);
-        System.out.print(json);
+        Gson gson = builder.create();
+        return (writeJsonFile("target/blockchain.json",gson.toJson(object.getAllBlocks())));
+
+    }
+    public static ArrayList<String> serializationTransaction(ArrayList<Transaction> object) throws IOException {
+        GsonBuilder builder = new GsonBuilder();
+        ArrayList<String> transactions = new ArrayList<>();
+        builder.registerTypeAdapter(Transaction.class, new TransactionAdapter());
+        Gson gson = builder.create();
+        for (Transaction transaction:object) {
+            transactions.add(gson.toJson(transaction));
+        }
+        return transactions;
+
     }
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
     public static Object deserialization(String filePath, Class className) throws FileNotFoundException {
         Gson gson = new Gson();
-        return gson.fromJson(filePath, className);
+        return gson.fromJson("target/blockchain.json", className);
     }
 
     // Read the JSON file from our disk using the PathFile parameter
