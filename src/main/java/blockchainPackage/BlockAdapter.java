@@ -22,30 +22,47 @@ public class BlockAdapter extends TypeAdapter {
         out.name("hash");
         out.value(block.getHash());
         out.name("prevHash");
-        out.value(block.getHash());
+        out.value(block.getPrevHash());
         out.name("transactions");
-        //out.value(JsonFileManager.serializationTransaction(block.getListTransaction()));
-        //ArrayList<String> hashTransactions = new ArrayList<>();
-        //for (Transaction transaction: block.getListTransaction()) {
-          //  hashTransactions.add(transaction.getHash());
-        //}
-        writeArray(out, block.getListTransaction());
-
-        //GsonBuilder builder = new GsonBuilder();
-        // builder.registerTypeAdapter(Blockchain.class, new BlockchainAdapter());
-        //builder.registerTypeAdapter(Transaction.class, new TransactionAdapter());
-        //Gson gson = builder.create();
-        //out.value(hashTransactions.toString());
+        writeArrayTransactions(out, block.getListTransaction());
         out.endObject();
     }
 
     @Override
     public Object read(JsonReader reader) throws IOException {
+        Blockchain blockchain = new Blockchain();
+        reader.beginObject();
+        String fieldname = null;
 
+        while (reader.hasNext()) {
+            JsonToken token = reader.peek();
+            System.out.println(token);
+/*
+            if (token.equals(JsonToken.NAME)) {
+                //get the current token
+                fieldname = reader.nextName();
+            }
+
+            if ("name".equals(fieldname)) {
+                //move to next token
+                token = reader.peek();
+                student.setName(reader.nextString());
+            }
+
+            if("rollNo".equals(fieldname)) {
+                //move to next token
+                token = reader.peek();
+                student.setRollNo(reader.nextInt());
+            }
+
+ */
+        }
+        reader.endObject();
+        return student;
         return null;
     }
 
-    public void writeArray(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {
+    public void writeArrayTransactions(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {
         writer.beginArray();
         for (Transaction transaction:transactions) {
             TransactionAdapter.writeTransaction(writer,transaction);

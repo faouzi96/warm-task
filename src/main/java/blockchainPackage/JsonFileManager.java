@@ -17,6 +17,8 @@ public class JsonFileManager {
     // Return a string with the content of our file
     public static String serialization(String filePath,Blockchain object) throws IOException {
         GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        builder.setPrettyPrinting();
         builder.registerTypeAdapter(Block.class, new BlockAdapter());
         Gson gson = builder.create();
         return (writeJsonFile(filePath+"target/blockchain.json",gson.toJson(object.getAllBlocks())));
