@@ -1,18 +1,35 @@
 package blockchainPackage;
-/*
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
-import java.lang.reflect.Type;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
-public class BlockchainAdapter implements JsonSerializer<Blockchain> {
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
+public class BlockchainAdapter extends TypeAdapter {
+
     @Override
-    public JsonElement serialize(Blockchain blockchain, Type type, JsonSerializationContext jsonSerializationContext) {
-        JsonObject object = new JsonObject();
-        object.addProperty("blocks", blockchain.getAllBlocks());
-        return object;
+    public void write(JsonWriter out, Object value) throws IOException {
+        Blockchain blockchain = (Blockchain) value;
+        out.name("blockchain");
+        out.beginArray();
+
+        out.endArray();
     }
+
+    @Override
+    public Object read(JsonReader in) throws IOException {
+        try {
+            Blockchain blockchain = new Blockchain();
+            in.beginObject();
+            
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 }
-*/

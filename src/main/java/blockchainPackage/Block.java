@@ -1,6 +1,5 @@
 package blockchainPackage;
 
-import com.fasterxml.jackson.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
@@ -24,7 +23,6 @@ public class Block extends Exception{
         this.hash = hashObject.getHash();
         this.timeStamp = (Instant.now()).toString();
     }
-
 
     public String getHash(){
         return this.hash;

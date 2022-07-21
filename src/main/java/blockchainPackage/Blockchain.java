@@ -1,6 +1,5 @@
 package blockchainPackage;
 
-import com.fasterxml.jackson.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
@@ -11,6 +10,9 @@ public class Blockchain {
 
     public Blockchain() throws NoSuchAlgorithmException {
         blocks.add(new Block(new Transaction(null,null,10000.0)));
+    }
+    public void setBlocks(LinkedList blocks){
+        this.blocks = blocks;
     }
     public Block getGenesisBlock(){
         return this.blocks.getFirst();

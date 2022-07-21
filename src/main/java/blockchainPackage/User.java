@@ -1,7 +1,6 @@
 package blockchainPackage;
 
-import com.fasterxml.jackson.annotation.*;
-
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class User {
@@ -11,7 +10,7 @@ public class User {
     private double amount;
     private ArrayList<Transaction> transactions = new ArrayList<>();
 
-    public User(String name, double amount){
+    public User(String name, double amount) throws NoSuchAlgorithmException {
         this.name=name;
         this.transactions.add(new Transaction(null, this, amount));
         this.amount = amount;
@@ -37,7 +36,7 @@ public class User {
         this.transactions.add(transaction);
     }
 
-    public Transaction send(double amount, User receiver){
+    public Transaction send(double amount, User receiver) throws NoSuchAlgorithmException {
         if(this.amount < amount) return null;
         else{
             Transaction transaction = new Transaction(this,receiver, amount);

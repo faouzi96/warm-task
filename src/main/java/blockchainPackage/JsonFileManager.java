@@ -1,28 +1,35 @@
 package blockchainPackage;
 
-/*
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JsonFileManager {
 
     // Serialize our object and write into a file using the filePath path, and finally
     // Return a string with the content of our file
-    public static void serialization(String filePath,Blockchain object) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(filePath+"target/blockchain.json"),object);
+    public static String serialization(String filePath,Blockchain object) throws IOException {
+        GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        builder.setPrettyPrinting();
+        builder.registerTypeAdapter(Block.class, new BlockAdapter());
+        Gson gson = builder.create();
+        return (writeJsonFile(filePath+"target/blockchain.json",gson.toJson(object.getAllBlocks())));
+
     }
+
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
-    public static Object deserialization(String filePath, Class className) throws FileNotFoundException, JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(readJsonFile(filePath+"target/blockchain.json"), className);
+    public static Object deserialization(String filePath, Class className) throws FileNotFoundException {
+        Gson gson = new Gson();
+        return gson.fromJson("target/blockchain.json", className);
     }
 
     // Read the JSON file from our disk using the PathFile parameter
@@ -48,4 +55,3 @@ public class JsonFileManager {
         return json;
     }
 }
-*/
