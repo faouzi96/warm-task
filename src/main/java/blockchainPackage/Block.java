@@ -23,7 +23,7 @@ public class Block extends Exception{
         this.hash = hashObject.getHash();
         this.timeStamp = (Instant.now()).toString();
     }
-
+    public Block() throws NoSuchAlgorithmException {}
     public String getHash(){
         return this.hash;
     }
@@ -47,7 +47,13 @@ public class Block extends Exception{
     public String getTimeStamp(){
         return this.timeStamp;
     }
+    public void setHash(String hash){
+        this.hash = hash;
+    }
     public void setPrevHash(String prevHash){
         this.prevHash = prevHash;
+    }
+    public void setTimeStamp(String timestamp){
+        this.timeStamp = timestamp;
     }
 }

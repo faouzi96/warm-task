@@ -28,9 +28,10 @@ public class Main {
 
         LinkedList<Block> blocks = blockchain.getAllBlocks();
 
-        String s = JsonFileManager.serialization("",blockchain);
-      //  System.out.println(JsonFileManager.deserialization("", Blockchain.class));
+        //String s = JsonFileManager.serialization("",blockchain);
+        LinkedList<Block> blockchainDeserialized = JsonFileManager.deserialization("", Blockchain.class);
 
+       System.out.println(blockchainDeserialized.get(0).getHash());
        // BlockchainExplorer.printBlockchainDetails(blockchain);
        // BlockchainExplorer.printBlockDetails(0,blockchain);
 
