@@ -18,22 +18,11 @@ public class JsonFileManager {
     public static String serialization(String filePath,Blockchain object) throws IOException {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Block.class, new BlockAdapter());
-
         Gson gson = builder.create();
-        return (writeJsonFile("target/blockchain.json",gson.toJson(object.getAllBlocks())));
+        return (writeJsonFile(filePath+"target/blockchain.json",gson.toJson(object.getAllBlocks())));
 
     }
-    public static ArrayList<String> serializationTransaction(ArrayList<Transaction> object) throws IOException {
-        GsonBuilder builder = new GsonBuilder();
-        ArrayList<String> transactions = new ArrayList<>();
-        builder.registerTypeAdapter(Transaction.class, new TransactionAdapter());
-        Gson gson = builder.create();
-        for (Transaction transaction:object) {
-            transactions.add(gson.toJson(transaction));
-        }
-        return transactions;
 
-    }
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
     public static Object deserialization(String filePath, Class className) throws FileNotFoundException {

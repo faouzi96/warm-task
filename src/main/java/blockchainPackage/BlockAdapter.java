@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BlockAdapter extends TypeAdapter {
 
@@ -24,11 +25,17 @@ public class BlockAdapter extends TypeAdapter {
         out.value(block.getHash());
         out.name("transactions");
         //out.value(JsonFileManager.serializationTransaction(block.getListTransaction()));
-        GsonBuilder builder = new GsonBuilder();
+        //ArrayList<String> hashTransactions = new ArrayList<>();
+        //for (Transaction transaction: block.getListTransaction()) {
+          //  hashTransactions.add(transaction.getHash());
+        //}
+        writeArray(out, block.getListTransaction());
+
+        //GsonBuilder builder = new GsonBuilder();
         // builder.registerTypeAdapter(Blockchain.class, new BlockchainAdapter());
-        builder.registerTypeAdapter(Transaction.class, new TransactionAdapter());
-        Gson gson = builder.create();
-        out.value(gson.toJson(block.getListTransaction()));
+        //builder.registerTypeAdapter(Transaction.class, new TransactionAdapter());
+        //Gson gson = builder.create();
+        //out.value(hashTransactions.toString());
         out.endObject();
     }
 
@@ -36,6 +43,14 @@ public class BlockAdapter extends TypeAdapter {
     public Object read(JsonReader reader) throws IOException {
 
         return null;
+    }
+
+    public void writeArray(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {
+        writer.beginArray();
+        for (Transaction transaction:transactions) {
+            TransactionAdapter.writeTransaction(writer,transaction);
+        }
+        writer.endArray();
     }
 
 }

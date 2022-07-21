@@ -2,14 +2,12 @@ package blockchainPackage;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Main {
 
 
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-
 
         Blockchain blockchain = new Blockchain();
 
@@ -31,7 +29,7 @@ public class Main {
         LinkedList<Block> blocks = blockchain.getAllBlocks();
 
         String s = JsonFileManager.serialization("",blockchain);
-        System.out.println(JsonFileManager.deserialization("", Blockchain.class));
+      //  System.out.println(JsonFileManager.deserialization("", Blockchain.class));
 
        // BlockchainExplorer.printBlockchainDetails(blockchain);
        // BlockchainExplorer.printBlockDetails(0,blockchain);

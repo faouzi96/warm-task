@@ -8,10 +8,9 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class TransactionAdapter extends TypeAdapter {
+public class TransactionAdapter {
 
-    @Override
-    public void write(JsonWriter out, Object value) throws IOException {
+    public static void writeTransaction(JsonWriter out, Object value) throws IOException {
         Transaction transaction = (Transaction) value;
         out.beginObject();
 
@@ -26,7 +25,6 @@ public class TransactionAdapter extends TypeAdapter {
         out.endObject();
     }
 
-    @Override
     public Object read(JsonReader in) throws IOException {
         return null;
     }

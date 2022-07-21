@@ -1,6 +1,7 @@
 package blockchainPackage;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 
 public class Transaction {
@@ -13,13 +14,16 @@ public class Transaction {
     private double amount;
 
     private String timestamp;
+    private String hash;
 
 
-    public Transaction(User sender, User receiver, double amount){
+    public Transaction(User sender, User receiver, double amount) throws NoSuchAlgorithmException {
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;
         this.timestamp = (Instant.now()).toString();
+        Hash256 hashObject = new Hash256(this.toString());
+        this.hash = hashObject.getHash();
     }
 
 
@@ -39,6 +43,9 @@ public class Transaction {
 
     public String getTimestamp(){
         return this.timestamp;
+    }
+    public String getHash(){
+        return this.hash;
     }
 
 }
