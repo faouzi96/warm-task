@@ -56,4 +56,7 @@ public class Block extends Exception{
     public void setTimeStamp(String timestamp){
         this.timeStamp = timestamp;
     }
+    public void setTransactions(ArrayList transactions){
+        this.transactions = transactions;
+    }
 }

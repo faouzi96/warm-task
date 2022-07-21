@@ -63,6 +63,11 @@ public class BlockAdapter extends TypeAdapter {
                     System.out.println(next);
                     block.setPrevHash(next);
                     continue;
+                case "transactions":
+                    next = in.nextString();
+                    System.out.println(next);
+                   // block.setTransactions(next);
+                    continue;
             }
         }
         in.endObject();
