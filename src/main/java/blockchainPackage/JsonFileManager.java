@@ -3,12 +3,15 @@ package blockchainPackage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class JsonFileManager {
@@ -27,22 +30,26 @@ public class JsonFileManager {
 
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
-    public static Object deserialization(String filePath, Class className) throws FileNotFoundException {
-        Gson gson = new Gson();
-        return gson.fromJson("target/blockchain.json", className);
+    public static LinkedList<Block> deserialization(String filePath, Class className) throws FileNotFoundException {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Block.class, new BlockAdapter());
+        builder.serializeNulls();
+        Gson gson = builder.create();
+        Type blockType = new TypeToken<LinkedList<Block>>(){}.getType();
+        LinkedList<Block> blockchain = gson.fromJson(readJsonFile(filePath), blockType);
+        return  blockchain;
     }
 
     // Read the JSON file from our disk using the PathFile parameter
     private static String readJsonFile(String filePath) throws FileNotFoundException {
             String json = "";
-            File myData = new File(filePath);
+            File myData = new File("target/blockchain.json");
             Scanner myReader = new Scanner(myData);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 json += data;
             }
             myReader.close();
-            System.out.println(json);
             return json;
     }
 

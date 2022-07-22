@@ -50,4 +50,8 @@ public class User {
     public ArrayList<Transaction> getListTransaction(){
         return this.transactions;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

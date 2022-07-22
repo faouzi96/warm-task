@@ -22,7 +22,14 @@ public class Wallet {
             System.out.println("________________________________________________");
         }
     }
-
+    public static User getUser(String username){
+        for (User user:users) {
+            if(user.getName().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
     public static void addUserWallet(User user){
         users.add(user);
     }

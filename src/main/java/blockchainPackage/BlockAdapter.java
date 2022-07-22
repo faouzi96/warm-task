@@ -8,7 +8,9 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class BlockAdapter extends TypeAdapter {
 
@@ -29,43 +31,58 @@ public class BlockAdapter extends TypeAdapter {
     }
 
     @Override
-    public Object read(JsonReader reader) throws IOException {
-        Blockchain blockchain = new Blockchain();
-        reader.beginObject();
-        String fieldname = null;
+    public Object read(JsonReader in) throws IOException {
 
-        while (reader.hasNext()) {
-            JsonToken token = reader.peek();
-            System.out.println(token);
-/*
-            if (token.equals(JsonToken.NAME)) {
-                //get the current token
-                fieldname = reader.nextName();
-            }
-
-            if ("name".equals(fieldname)) {
-                //move to next token
-                token = reader.peek();
-                student.setName(reader.nextString());
-            }
-
-            if("rollNo".equals(fieldname)) {
-                //move to next token
-                token = reader.peek();
-                student.setRollNo(reader.nextInt());
-            }
-
- */
+        Block block = null;
+        try {
+            block = new Block();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
-        reader.endObject();
-        return student;
-        return null;
+
+        in.beginObject();
+        while (in.hasNext()) {
+            if (in.peek().equals(JsonToken.NULL)){
+                in.nextNull();
+            }
+            String name = in.nextName();
+
+            switch (name) {
+
+                case "timestamp":
+                    String next = in.nextString();
+                    block.setTimeStamp(next);
+                    continue;
+                case "hash":
+                    next = in.nextString();
+                    block.setHash(next);
+                    continue;
+                case "prevHash":
+                    if (in.peek() == JsonToken.NULL){
+                        in.nextNull();
+                        block.setPrevHash(null);
+                    }
+                    else{
+                        block.setPrevHash(in.nextString());
+                   }
+                    continue;
+                case "transactions":
+                    try {
+                        block.setTransactions(TransactionAdapter.read(in));
+                    } catch (NoSuchAlgorithmException e) {
+                        throw new RuntimeException(e);
+                    }
+                    continue;
+            }
+        }
+       in.endObject();
+        return block;
     }
 
     public void writeArrayTransactions(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {
         writer.beginArray();
-        for (Transaction transaction:transactions) {
-            TransactionAdapter.writeTransaction(writer,transaction);
+        for (Transaction transaction : transactions) {
+            TransactionAdapter.writeTransaction(writer, transaction);
         }
         writer.endArray();
     }

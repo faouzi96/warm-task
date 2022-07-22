@@ -14,7 +14,6 @@ public class Transaction {
     private double amount;
 
     private String timestamp;
-    private String hash;
 
 
     public Transaction(User sender, User receiver, double amount) throws NoSuchAlgorithmException {
@@ -22,10 +21,7 @@ public class Transaction {
         this.receiver = receiver;
         this.amount = amount;
         this.timestamp = (Instant.now()).toString();
-        Hash256 hashObject = new Hash256(this.toString());
-        this.hash = hashObject.getHash();
     }
-
 
     public String getSender(){
         if(this.sender != null) return this.sender.getName();
@@ -44,8 +40,18 @@ public class Transaction {
     public String getTimestamp(){
         return this.timestamp;
     }
-    public String getHash(){
-        return this.hash;
+
+    public void setTimestamp(String timestamp){
+        this.timestamp = timestamp;
+    }
+    public void setSender(User sender){
+         this.sender = sender;
+    }
+    public void setReceiver(User receiver){
+        this.receiver = receiver;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 }
