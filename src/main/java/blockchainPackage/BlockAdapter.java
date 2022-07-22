@@ -33,46 +33,50 @@ public class BlockAdapter extends TypeAdapter {
     @Override
     public Object read(JsonReader in) throws IOException {
 
-        // Create an empty Employee object
         Block block = null;
-        LinkedList<Block> list = new LinkedList<>();
         try {
             block = new Block();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
 
-        // Consume start of JSON object
         in.beginObject();
         while (in.hasNext()) {
+            if (in.peek().equals(JsonToken.NULL)){
+                in.nextNull();
+            }
             String name = in.nextName();
-            System.out.println(name);
+
             switch (name) {
+
                 case "timestamp":
                     String next = in.nextString();
-                    System.out.println(next);
                     block.setTimeStamp(next);
                     continue;
                 case "hash":
                     next = in.nextString();
-                    System.out.println(next);
                     block.setHash(next);
                     continue;
                 case "prevHash":
-                    next = in.nextString();
-                    System.out.println(next);
-                    block.setPrevHash(next);
+                    if (in.peek() == JsonToken.NULL){
+                        in.nextNull();
+                        block.setPrevHash(null);
+                    }
+                    else{
+                        block.setPrevHash(in.nextString());
+                   }
                     continue;
                 case "transactions":
-                    next = in.nextString();
-                    System.out.println(next);
-                   // block.setTransactions(next);
+                    try {
+                        block.setTransactions(TransactionAdapter.read(in));
+                    } catch (NoSuchAlgorithmException e) {
+                        throw new RuntimeException(e);
+                    }
                     continue;
             }
         }
-        in.endObject();
-
-        return null;
+       in.endObject();
+        return block;
     }
 
     public void writeArrayTransactions(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {

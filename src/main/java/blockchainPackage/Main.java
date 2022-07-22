@@ -26,14 +26,14 @@ public class Main {
         Block block2 = new Block(firstUser.send(20.0, thirdUser));
         blockchain.addBlock(block2);
 
-        LinkedList<Block> blocks = blockchain.getAllBlocks();
 
         //String s = JsonFileManager.serialization("",blockchain);
         LinkedList<Block> blockchainDeserialized = JsonFileManager.deserialization("", Blockchain.class);
 
-       System.out.println(blockchainDeserialized.get(0).getHash());
-       // BlockchainExplorer.printBlockchainDetails(blockchain);
-       // BlockchainExplorer.printBlockDetails(0,blockchain);
+        System.out.println(blockchainDeserialized.size());
+        blockchain.setBlocks(blockchainDeserialized);
+        BlockchainExplorer.printBlockchainDetails(blockchain);
+        BlockchainExplorer.printBlockDetails(0,blockchain);
 
        // Wallet.printUserListTransactions("HAHA");
 

@@ -2,13 +2,19 @@
   {
     "timestamp": "2022-07-21T23:42:56.142411700Z",
     "hash": "fc48c0ddb84d4301c1e823625bca72fbb927f2ddb7ebe743e99e3dfd96c0e621",
-    "prevHash": "null",
+    "prevHash": null,
     "transactions": [
       {
         "timestamp": "2022-07-21T23:42:56.123659400Z",
         "sender": null,
         "receiver": null,
         "amount": 10000.0
+      },
+      {
+        "timestamp": "2022-07-21T23:42:56.142411700Z",
+        "sender": "JAJA",
+        "receiver": "DADA",
+        "amount": 100.0
       }
     ]
   },

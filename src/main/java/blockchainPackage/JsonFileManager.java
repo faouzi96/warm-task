@@ -33,10 +33,10 @@ public class JsonFileManager {
     public static LinkedList<Block> deserialization(String filePath, Class className) throws FileNotFoundException {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Block.class, new BlockAdapter());
+        builder.serializeNulls();
         Gson gson = builder.create();
         Type blockType = new TypeToken<LinkedList<Block>>(){}.getType();
         LinkedList<Block> blockchain = gson.fromJson(readJsonFile(filePath), blockType);
-        System.out.println(blockchain);
         return  blockchain;
     }
 
