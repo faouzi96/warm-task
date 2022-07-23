@@ -24,41 +24,56 @@ public class JsonFileManager {
         builder.setPrettyPrinting();
         builder.registerTypeAdapter(Block.class, new BlockAdapter());
         Gson gson = builder.create();
-        return (writeJsonFile(filePath+"target/blockchain.json",gson.toJson(object.getAllBlocks())));
+        if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
+        return (writeJsonFile(filePath+"blockchain.json",gson.toJson(object.getAllBlocks())));
 
     }
 
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
-    public static LinkedList<Block> deserialization(String filePath, Class className) throws FileNotFoundException {
+    public static LinkedList<Block> deserialization(String filePath) {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Block.class, new BlockAdapter());
         builder.serializeNulls();
         Gson gson = builder.create();
         Type blockType = new TypeToken<LinkedList<Block>>(){}.getType();
-        LinkedList<Block> blockchain = gson.fromJson(readJsonFile(filePath), blockType);
+        LinkedList<Block> blockchain = null;
+        blockchain = gson.fromJson(readJsonFile(filePath), blockType);
         return  blockchain;
     }
 
     // Read the JSON file from our disk using the PathFile parameter
-    private static String readJsonFile(String filePath) throws FileNotFoundException {
+    private static String readJsonFile(String filePath) {
             String json = "";
-            File myData = new File("target/blockchain.json");
-            Scanner myReader = new Scanner(myData);
-            while (myReader.hasNextLine()) {
+            if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
+            File myData = new File(filePath+"blockchain.json");
+        Scanner myReader = null;
+        try {
+            myReader = new Scanner(myData);
+            System.out.println("JSON file Successfully read.");
+        } catch (FileNotFoundException e) {
+            System.out.println("No such File or directory is found");
+        }
+        while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 json += data;
             }
-            myReader.close();
-            return json;
+        myReader.close();
+        return json;
     }
 
     // Write into the file which is location in filePath
-    private static String writeJsonFile(String filePath, String json) throws IOException {
-            FileWriter myWriter = new FileWriter(filePath);
+    private static String writeJsonFile(String filePath, String json) {
+        FileWriter myWriter = null;
+        try {
+            myWriter = new FileWriter(filePath);
             myWriter.write(json);
             myWriter.close();
             System.out.println("JSON file Successfully wrote.");
+        } catch (IOException e) {
+            System.out.println("No such directory is found");
+        }
+
         return json;
     }
 }

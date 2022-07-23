@@ -1,15 +1,20 @@
 package blockchainPackage;
 
 
+import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 
 public class Blockchain {
-
     private LinkedList<Block> blocks = new LinkedList<>();
-
-    public Blockchain() throws NoSuchAlgorithmException {
-        blocks.add(new Block(new Transaction(null,null,10000.0)));
+    public Blockchain(String path) throws NoSuchAlgorithmException, FileNotFoundException {
+        LinkedList<Block> listBlocks = JsonFileManager.deserialization(path);
+        if (listBlocks.size() == 0){
+            blocks.add(new Block(new Transaction(null,null,10000.0)));
+        }
+        else{
+            blocks.addAll(listBlocks);
+        }
     }
     public void setBlocks(LinkedList blocks){
         this.blocks = blocks;
@@ -44,5 +49,4 @@ public class Blockchain {
         block.setPrevHash(this.getLastBlock().getHash());
         this.blocks.add(block);
     }
-
 }
