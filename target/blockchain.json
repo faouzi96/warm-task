@@ -11,18 +11,5 @@
         "amount": 10000.0
       }
     ]
-  },
-  {
-    "timestamp": "2022-07-24T14:44:00.535316100Z",
-    "hash": "65cdebaa7b2ad7befd9108f586361a4d44c77d1115b2b9b8dae222f227ff6aef",
-    "prevHash": "a7de9720914020a3fe13e4f591a3e471afdfbf86b01db2f7baa864717fddc883",
-    "transactions": [
-      {
-        "timestamp": "2022-07-24T14:44:00.517666700Z",
-        "sender": null,
-        "receiver": "ZAZA",
-        "amount": 10000.0
-      }
-    ]
   }
 ]

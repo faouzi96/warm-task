@@ -44,9 +44,13 @@ public class JsonFileManager {
 
     // Read the JSON file from our disk using the PathFile parameter
     private static String readJsonFile(String filePath, String type) {
-            String json = "";
-            if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
-            File myData = new File(filePath+type+".json");
+        String json = "";
+        if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
+        File myData = new File(filePath+type+".json");
+        if (!myData.exists()) {
+            writeJsonFile(filePath+type+".json","[]");
+            myData = new File(filePath+type+".json");
+        }
         Scanner myReader = null;
         try {
             myReader = new Scanner(myData);
