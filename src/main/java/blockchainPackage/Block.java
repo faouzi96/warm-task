@@ -1,20 +1,14 @@
 package blockchainPackage;
 
-
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.ArrayList;
 
 public class Block extends Exception{
-
     private String prevHash;
-
     private String hash;
-
     private String timeStamp;
-
     private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-
 
     public Block(Transaction transaction) throws NoSuchAlgorithmException {
         this.prevHash = null;
@@ -23,15 +17,14 @@ public class Block extends Exception{
         this.hash = hashObject.getHash();
         this.timeStamp = (Instant.now()).toString();
     }
+    //This constructor created just for the deserialization purpose
     public Block() throws NoSuchAlgorithmException {}
     public String getHash(){
         return this.hash;
     }
-
     public String getPrevHash(){
         return this.prevHash;
     }
-
     public boolean addTransaction(Transaction transaction) throws NoSuchAlgorithmException {
         if(this.transactions.size() >= 10) return false;
         else{

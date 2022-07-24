@@ -47,6 +47,7 @@ public class JsonFileManager {
         String json = "";
         if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
         File myData = new File(filePath+type+".json");
+        // If the file does not exist already we're gonna create it
         if (!myData.exists()) {
             writeJsonFile(filePath+type+".json","[]");
             myData = new File(filePath+type+".json");

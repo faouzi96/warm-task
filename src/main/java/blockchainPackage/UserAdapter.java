@@ -18,6 +18,7 @@ public class UserAdapter extends TypeAdapter {
         out.value(user.getName());
         out.name("amount");
         out.value(user.getAmount());
+
         out.endObject();
     }
 
@@ -27,6 +28,7 @@ public class UserAdapter extends TypeAdapter {
         double amount = 0;
 
         in.beginObject();
+
         while (in.hasNext()) {
             if (in.peek().equals(JsonToken.NULL)){
                 in.nextNull();
@@ -34,7 +36,6 @@ public class UserAdapter extends TypeAdapter {
             String name = in.nextName();
 
             switch (name) {
-
                 case "name":
                     userName = in.nextString();
                     continue;
@@ -43,12 +44,15 @@ public class UserAdapter extends TypeAdapter {
                     continue;
             }
         }
+
         User user = null;
+
         try {
             user = new User(userName,amount);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+
         in.endObject();
         return user;
     }

@@ -1,6 +1,5 @@
 package blockchainPackage;
 
-
 public class BlockchainExplorer {
 
     public static void printBlockchainDetails(Blockchain blockchain) {

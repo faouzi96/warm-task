@@ -1,13 +1,11 @@
 package blockchainPackage;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Wallet {
     private static ArrayList<User> users = new ArrayList<>();
+    //PRINT the amount or the balance of the user which is passed as an argument to this method
     public static void printAmount(String username){
         boolean b = false;
         for (User user:users) {
@@ -26,6 +24,7 @@ public class Wallet {
             System.out.println("________________________________________________");
         }
     }
+    // This method return the User object based on his Name
     public static User getUser(String username){
         for (User user:users) {
             if(user.getName().equals(username)) {
@@ -34,6 +33,7 @@ public class Wallet {
         }
         return null;
     }
+    // This method display or print the list of transactions of the user which his name is passed as parameter to this method
     public static void printUserListTransactions(String username){
         boolean b = false;
         for (User user:users) {
@@ -60,6 +60,7 @@ public class Wallet {
             System.out.println("________________________________________________");
         }
     }
+    // After creating any user we call this method to add it at the list of users available in the wallet
     public static void addUserWallet(User user) throws IOException {
         if(!checkUserExistence(user.getName())){
             users.add(user);
@@ -69,6 +70,7 @@ public class Wallet {
             System.out.println("User already exist");
         }
     }
+    // This method is called we do any new operation (transaction) to update the user balance information
     public static void updateUser(User user) throws IOException {
         for (int i = 0; i < users.size(); i++) {
             if(users.get(i).getName().equals(user.getName())){
@@ -77,16 +79,19 @@ public class Wallet {
         }
         JsonFileManager.serializationUser(Blockchain.getPath());
     }
+    //This method check if the user already exist in the list of users
     public static boolean checkUserExistence(String username){
         for (User user:users) {
             if(user.getName().equals(username)) return true;
         }
         return false;
     }
-    public static ArrayList getListUsers(){
+    // Return all the list of users
+    public static ArrayList<User> getListUsers(){
         return users;
     }
-    public static void setListUsers(ArrayList listUsers){
+    // This method is just used during the deserialization process of the users file json
+    public static void setListUsers(ArrayList<User> listUsers){
          users = listUsers;
     }
 

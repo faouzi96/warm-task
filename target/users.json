@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "name": "RAPHA",
+    "amount": 10000.0
+  },
+  {
+    "name": "PHILP",
+    "amount": 0.0
+  }
+]
