@@ -38,19 +38,18 @@ public class JsonFileManager {
         Gson gson = builder.create();
         Type blockType = new TypeToken<LinkedList<Block>>(){}.getType();
         LinkedList<Block> blockchain = null;
-        blockchain = gson.fromJson(readJsonFile(filePath), blockType);
+        blockchain = gson.fromJson(readJsonFile(filePath,"blockchain"), blockType);
         return  blockchain;
     }
 
     // Read the JSON file from our disk using the PathFile parameter
-    private static String readJsonFile(String filePath) {
+    private static String readJsonFile(String filePath, String type) {
             String json = "";
             if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
-            File myData = new File(filePath+"blockchain.json");
+            File myData = new File(filePath+type+".json");
         Scanner myReader = null;
         try {
             myReader = new Scanner(myData);
-            System.out.println("JSON file Successfully read.");
         } catch (FileNotFoundException e) {
             System.out.println("No such File or directory is found");
         }
@@ -69,11 +68,37 @@ public class JsonFileManager {
             myWriter = new FileWriter(filePath);
             myWriter.write(json);
             myWriter.close();
-            System.out.println("JSON file Successfully wrote.");
         } catch (IOException e) {
             System.out.println("No such directory is found");
         }
 
         return json;
+    }
+
+
+    // Serialize our object and write into a file using the filePath path, and finally
+    // Return a string with the content of our file
+    public static String serializationUser(String filePath) throws IOException {
+        GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        builder.setPrettyPrinting();
+        builder.registerTypeAdapter(User.class, new UserAdapter());
+        Gson gson = builder.create();
+        if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
+        return (writeJsonFile(filePath+"users.json",gson.toJson(Wallet.getListUsers())));
+
+    }
+
+    // Read the file from the passed path, deserialize it transforms it into an object and
+    // return this last one
+    public static ArrayList<User> deserializationUsers(String filePath) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(User.class, new UserAdapter());
+        builder.serializeNulls();
+        Gson gson = builder.create();
+        Type userType = new TypeToken<ArrayList<User>>(){}.getType();
+        ArrayList<User> users = null;
+        users = gson.fromJson(readJsonFile(filePath,"users"), userType);
+        return  users == null ? new ArrayList<>() : users;
     }
 }

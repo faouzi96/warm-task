@@ -25,11 +25,7 @@ public class Hash256 extends Exception{
         byte[] result = md.digest(input.getBytes(UTF_8));
         return bytesToHex(result);
     }
-
     public String getHash(){
         return this.hash;
-    }
-    public int getHashLength() {
-        return this.hash.length();
     }
 }

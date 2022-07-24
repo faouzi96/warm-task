@@ -37,6 +37,7 @@ public class Block extends Exception{
         else{
             this.transactions.add(transaction);
             Hash256 hashObject = new Hash256(this.transactions.toString());
+            System.out.println(hashObject.getHash());
             this.hash = hashObject.getHash();
             return true;
         }

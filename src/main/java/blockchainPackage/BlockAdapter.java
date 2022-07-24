@@ -26,7 +26,7 @@ public class BlockAdapter extends TypeAdapter {
         out.name("prevHash");
         out.value(block.getPrevHash());
         out.name("transactions");
-        writeArrayTransactions(out, block.getListTransaction());
+        TransactionAdapter.writeArrayTransactions(out, block.getListTransaction());
         out.endObject();
     }
 
@@ -79,12 +79,5 @@ public class BlockAdapter extends TypeAdapter {
         return block;
     }
 
-    public void writeArrayTransactions(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {
-        writer.beginArray();
-        for (Transaction transaction : transactions) {
-            TransactionAdapter.writeTransaction(writer, transaction);
-        }
-        writer.endArray();
-    }
 
 }

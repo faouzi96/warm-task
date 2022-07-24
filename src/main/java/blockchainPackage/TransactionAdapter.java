@@ -91,4 +91,11 @@ public class TransactionAdapter {
         return transactions;
     }
 
+    public static void writeArrayTransactions(JsonWriter writer, ArrayList<Transaction> transactions) throws IOException {
+        writer.beginArray();
+        for (Transaction transaction : transactions) {
+            TransactionAdapter.writeTransaction(writer, transaction);
+        }
+        writer.endArray();
+    }
 }
