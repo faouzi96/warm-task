@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
-        Blockchain blockchain = new Blockchain("target");
+        Blockchain blockchain = new Blockchain("C:\\Users\\fboussad\\Downloads");
         BlockchainExplorer.printLastBlock(blockchain);
         BlockchainExplorer.printGenesisBlock(blockchain);
         System.out.println(blockchain.blockchainCheckValidity());
@@ -17,6 +17,6 @@ public class Main {
         User user = Wallet.getUser("ZAZA");
         Wallet.printAmount("ZAZA");
         Wallet.printUserListTransactions(user.getName());
-        JsonFileManager.serialization("target",blockchain);
+        JsonFileManager.serialization("C:\\Users\\fboussad\\Downloads",blockchain);
     }
 }
