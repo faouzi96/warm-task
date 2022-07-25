@@ -59,9 +59,13 @@ public class Blockchain {
     }
     //After adding any block to the blockchain we serialize it and save it in the JSON file
     public void addBlock(Block block) throws IOException {
-        block.setPrevHash(this.getLastBlock().getHash());
-        this.blocks.add(block);
-        JsonFileManager.serialization(this.path,this);
+        if (block != null) {
+            block.setPrevHash(this.getLastBlock().getHash());
+            this.blocks.add(block);
+            block = null;
+            JsonFileManager.serialization(this.path, this);
+        }
+        else System.out.println("The block is NULL");
     }
     // This method allows us to obtain the list of the transactions by passing the name of the user
     // this method is called in Wallet Class
