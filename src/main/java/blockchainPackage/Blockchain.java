@@ -84,7 +84,7 @@ public class Blockchain {
     // This method check if the previous Hash of any block match with the previous block's hash
     public boolean blockchainCheckValidity() throws NoSuchAlgorithmException {
         int length = this.blocks.size();
-        for (int i = length-1; i > 1; i--) {
+        for (int i = length-1; i >= 1; i--) {
             if(!this.blocks.get(i).getPrevHash().equals(this.blocks.get(i-1).getHash())){
                 return false;
             }

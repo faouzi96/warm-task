@@ -60,6 +60,14 @@ public class Wallet {
             System.out.println("________________________________________________");
         }
     }
+    public static void printListUsers(){
+        System.out.println("___________________________USERS LIST_______________________________");
+        if(users.isEmpty()) System.out.println("The list is empty");
+        else for (User user:users) {
+            System.out.println("- Name: "+ user.getName());
+        }
+        System.out.println("_____________________________________________________________");
+    }
     // After creating any user we call this method to add it at the list of users available in the wallet
     public static void addUserWallet(User user) throws IOException {
         if(!checkUserExistence(user.getName())){
