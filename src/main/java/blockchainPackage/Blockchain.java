@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 public class Blockchain {
     private static LinkedList<Block> blocks = new LinkedList<>();
+    private static int difficulty = 0;
     private static String path;
     // Constructor we deserialize the users and the blockchain JSON files
     // We check if there is already some chunks of code in the Blockchain File
@@ -94,5 +95,13 @@ public class Blockchain {
     // this method return the amount of the first transaction or the amount existing in the blockchain
     public static double getAmount(){
         return blocks.get(0).getListTransaction().get(0).getAmount();
+    }
+
+    public static int getDifficulty() {
+        return difficulty;
+    }
+
+    public static void setDifficulty(int difficulty) {
+        Blockchain.difficulty = difficulty;
     }
 }

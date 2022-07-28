@@ -36,7 +36,45 @@ public class Main {
         System.out.println("---------------------------------------------------------------------------------");
     }
 
-
+    public static void createTransaction(Blockchain blockchain, Block block) throws IOException, NoSuchAlgorithmException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Creation of new Transaction: ");
+        System.out.println("Sender name: ");
+        String sender = sc.nextLine();
+        System.out.println("Receiver name: ");
+        String receiver = sc.nextLine();
+        System.out.println("Amount: ");
+        Scanner scanDouble = new Scanner(System.in);
+        double amount = (double)scanDouble.nextDouble();
+        while (amount <= 0){
+            System.out.println("The amount should be greater than 0");
+            amount = (double)scanDouble.nextDouble();
+        }
+        User user1 = Wallet.getUser(sender);
+        if (Wallet.checkUserExistence(sender) || Wallet.checkUserExistence(receiver)) {
+            Transaction transaction = user1.send(amount, receiver);
+            if (transaction != null) {
+                if (block == null) {
+                    block = new Block(transaction);
+                    System.out.println("Transaction added successfully to the block");
+                } else {
+                    block.addTransaction(transaction);
+                    if (block.getListTransaction().size() <= 10) {
+                        System.out.println("Transaction added successfully to the block");
+                    }
+                    if (block.getListTransaction().size() == 10) {
+                        blockchain.addBlock(block);
+                        block = null;
+                        System.out.println("The block is mined successfully < 10 Transaction in it >");
+                    }
+                }
+            } else {
+                System.out.println("The balance of the user is not sufficient for this operation");
+                Wallet.printAmount(sender);
+            }
+        }
+        else System.out.println("The Sender or the Receiver does not exist");
+    }
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
         Scanner scanner = new Scanner(System.in);
@@ -51,10 +89,13 @@ public class Main {
             pathExist = file.exists();
             if (!pathExist) System.out.println("Directory not found");
         }while(!pathExist);
+
         printHelpAssist();
+
         Blockchain blockchain = new Blockchain(path);
 
         boolean lunched = true;
+
         while (lunched){
             Scanner sc = new Scanner(System.in);
             System.out.println("Type the command number: ");
@@ -108,43 +149,7 @@ public class Main {
                     Wallet.printListUsers();
                     continue;
                 case 10:
-                    System.out.println("Creation of new Transaction: ");
-                    System.out.println("Sender name: ");
-                    String sender = sc.nextLine();
-                    System.out.println("Receiver name: ");
-                    String receiver = sc.nextLine();
-                    System.out.println("Amount: ");
-                    Scanner scanDouble = new Scanner(System.in);
-                    double amount = (double)scanDouble.nextDouble();
-                    while (amount <= 0){
-                        System.out.println("The amount should be greater than 0");
-                        amount = (double)scanDouble.nextDouble();
-                    }
-                    User user1 = Wallet.getUser(sender);
-                    if (Wallet.checkUserExistence(sender) || Wallet.checkUserExistence(receiver)) {
-                        Transaction transaction = user1.send(amount, receiver);
-                        if (transaction != null) {
-                            if (block == null) {
-                                block = new Block(transaction);
-                                System.out.println("Transaction added successfully to the block");
-                            } else {
-                                block.addTransaction(transaction);
-                                if (block.getListTransaction().size() <= 10) {
-                                    System.out.println("Transaction added successfully to the block");
-                                }
-                                if (block.getListTransaction().size() == 10) {
-                                    blockchain.addBlock(block);
-                                    block = null;
-                                    System.out.println("The block is mined successfully < 10 Transaction in it >");
-                                }
-                            }
-                        } else {
-                            System.out.println("The balance of the user is not sufficient for this operation");
-                            Wallet.printAmount(sender);
-                        }
-                    }
-                    else System.out.println("The Sender or the Receiver does not exist");
-                    // ADD to a block
+                    createTransaction(blockchain,block);
                     continue;
                 case 11:
                     System.out.println("Type the user's name: ");
@@ -159,84 +164,5 @@ public class Main {
                     continue;
             }
         }
-        // Creation or Deserialization of the blockchain structure
-        // if there is no structure already created this instance will create the genesis block
-        // automatically and assign 10000.0 unit as a first transaction
-        // Accept a String as an argument ( path where can find or where we want store our blockchain
-        /*----------------------------------------------------*/
-            //Blockchain blockchain = new Blockchain("target");
-        /*----------------------------------------------------*/
-
-        /*---------------------------- Creation of the first user -----------------------------*/
-
-            //User firstUser = new User("FIRSTONE");
-
-            // just after creating the first user we have to get the first transaction which consist to
-            // send all the balance to this first user
-               //  Transaction transaction = firstUser.getFirstTransaction();
-
-            // create a block and Add this transaction to it
-            // Block has to contain at least one transaction this is why we pass the first transaction to its
-            // constructor
-              // Block block = new Block(transaction);
-
-        /*--------------------------------------------------------------------------------------*/
-
-        /*----------------------------Do transactions--------------------------------*/
-
-           // We have to create other users who will have a blanace 0.0
-              // User secondUser = new User("SECONDONE");
-          // User method send - return the transaction
-             // Transaction transaction = firstUser.send(HowMuch,secondUserName);
-          // Add this transaction to a block which is not added to the blockchain
-          // This method return a boolean which allows us to know if the block contains 10 or less than 10 transactions
-            // block.addTransaction(transaction);
-
-
-        /*------------------------------------------------------------------------------------*/
-
-        /*---------------------------- Blockchain method add block -----------------------------*/
-
-        /*--- block as an argument - return void ---- */
-        // blockchain.addBlock(block);
-
-        /*---------------------------------------------------------------------------------------*/
-
-        /*----------------------------Blockchain explorer--------------------------------*/
-
-           /*--- blockchain as an argument - display genesis block---- */
-               // BlockchainExplorer.printGenesisBlock(blockchain);
-
-           /*--- Height and blockchain as arguments - display a block---- */
-               // BlockchainExplorer.printBlockDetails(height,blockchain);
-
-           /*--- Hash and blockchain as arguments - display a block---- */
-               // BlockchainExplorer.printBlockDetails(Hash,blockchain);
-
-           /*--- blockchain as an argument - display the last block---- */
-               // BlockchainExplorer.printLastBlock(blockchain);
-
-           /*--- blockchain as an argument - display the length of the blockchain---- */
-               ///// BlockchainExplorer.printBlockchainDetails(blockchain);
-
-        /*------------------------------------------------------------------------------------*/
-
-        /*--------------------------------- WALLET OPERATIONS --------------------------------*/
-           // Get the user Object from his username
-              // Wallet.getUser(userName);
-           // display the balance for any user by passing his username
-              // Wallet.printAmount(userName);
-           // display the list of transaction for the username passed as an argument
-              //Wallet.printUserListTransactions(userName);
-        /*------------------------------------------------------------------------------------*/
-
-       /*
-          Transaction transaction = user.send(10.0,"RAPHA");
-          if(transaction != null){
-             Block block = new Block(transaction);
-             blockchain.addBlock(block);
-          }
-          else System.out.println("Operation failed");
-       */
     }
 }
