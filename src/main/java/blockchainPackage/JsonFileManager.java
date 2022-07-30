@@ -2,7 +2,6 @@ package blockchainPackage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
@@ -22,23 +21,22 @@ public class JsonFileManager {
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
         builder.setPrettyPrinting();
-        builder.registerTypeAdapter(Block.class, new BlockAdapter());
+        builder.registerTypeAdapter(Blockchain.class, new BlockchainAdapter());
         Gson gson = builder.create();
         if(filePath.charAt(filePath.length()-1) != '/') filePath += '/';
-        return (writeJsonFile(filePath+"blockchain.json",gson.toJson(object.getAllBlocks())));
+        return (writeJsonFile(filePath+"blockchain.json",gson.toJson(object)));
 
     }
 
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
-    public static LinkedList<Block> deserialization(String filePath) {
+    public static Blockchain deserialization(String filePath) {
         GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Block.class, new BlockAdapter());
+        builder.registerTypeAdapter(Blockchain.class, new BlockchainAdapter());
         builder.serializeNulls();
         Gson gson = builder.create();
-        Type blockType = new TypeToken<LinkedList<Block>>(){}.getType();
-        LinkedList<Block> blockchain = null;
-        blockchain = gson.fromJson(readJsonFile(filePath,"blockchain"), blockType);
+        Blockchain blockchain = null;
+        blockchain = gson.fromJson(readJsonFile(filePath,"blockchain"), Blockchain.class);
         return  blockchain;
     }
 
@@ -49,7 +47,8 @@ public class JsonFileManager {
         File myData = new File(filePath+type+".json");
         // If the file does not exist already we're gonna create it
         if (!myData.exists()) {
-            writeJsonFile(filePath+type+".json","[]");
+            if(type.equals("users")) writeJsonFile(filePath+type+".json","[]");
+            else writeJsonFile(filePath+type+".json","{}");
             myData = new File(filePath+type+".json");
         }
         Scanner myReader = null;
@@ -97,6 +96,7 @@ public class JsonFileManager {
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
     public static ArrayList<User> deserializationUsers(String filePath) {
+        System.out.println(filePath);
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(User.class, new UserAdapter());
         builder.serializeNulls();

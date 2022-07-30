@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 
 public class BlockchainAdapter extends TypeAdapter {
     @Override
@@ -16,10 +17,8 @@ public class BlockchainAdapter extends TypeAdapter {
 
         out.name("length");
         out.value(blockchain.getLength());
-        out.name("difficulty");
-        out.value(Blockchain.getDifficulty());
         out.name("blocks");
-        BlockAdapter.writeArrayTransactions(out, block.getListTransaction());
+        BlockAdapter.writeArrayBlocks(out, blockchain.getAllBlocks());
 
         out.endObject();
     }
@@ -27,7 +26,12 @@ public class BlockchainAdapter extends TypeAdapter {
     @Override
     public Object read(JsonReader in) throws IOException {
 
-        Block block = new Block();
+        Blockchain blockchain = null;
+        try {
+            blockchain = new Blockchain();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
 
         in.beginObject();
         while (in.hasNext()) {
@@ -39,23 +43,15 @@ public class BlockchainAdapter extends TypeAdapter {
             switch (name) {
 
                 case "length":
-                    String next = in.nextString();
-                    block.setTimeStamp(next);
+                    int length = in.nextInt();
+                    blockchain.setLength(length);
                     continue;
-                case "difficulty":
-                    int nonce = in.nextInt();
-                    block.setNonce(nonce);
-                    continue;
-                case "transactions":
-                    try {
-                        block.setTransactions(TransactionAdapter.read(in));
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
-                    }
+                case "blocks":
+                    blockchain.setAllBlocks((LinkedList) BlockAdapter.read(in));
                     continue;
             }
         }
         in.endObject();
-        return block;
+        return blockchain;
     }
 }

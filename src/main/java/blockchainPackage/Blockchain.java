@@ -8,26 +8,23 @@ import java.util.LinkedList;
 public class Blockchain {
     private static LinkedList<Block> blocks = new LinkedList<>();
     private static int difficulty = 0;
+    private int length;
     private static String path;
     // Constructor we deserialize the users and the blockchain JSON files
     // We check if there is already some chunks of code in the Blockchain File
     // otherwise we create new one, we create first transaction add it to the genesis Block and add as
     // our first block in the blockchain
-    public Blockchain(String path) throws NoSuchAlgorithmException, IOException {
-        Blockchain.path = path;
-        Wallet.setListUsers(JsonFileManager.deserializationUsers(path));
-        LinkedList<Block> listBlocks = JsonFileManager.deserialization(path);
-        if (listBlocks.size() == 0){
+    public Blockchain() throws NoSuchAlgorithmException, IOException {
+            this.length = 0;
             this.addBlock(new Block(new Transaction(null,null,10000.0)));
             JsonFileManager.serialization(Blockchain.path,this);
-        }
-        else{
-            blocks.addAll(listBlocks);
-        }
     }
 
     public static String getPath() {
-        return path;
+        return Blockchain.path;
+    }
+    public static void setPath(String path){
+        Blockchain.path = path;
     }
     public Block getGenesisBlock(){
         return Blockchain.blocks.getFirst();
@@ -35,11 +32,17 @@ public class Blockchain {
     public LinkedList<Block> getAllBlocks(){
         return Blockchain.blocks;
     }
+    public void setAllBlocks(LinkedList blocks){
+        Blockchain.blocks = blocks;
+    }
     public Block getLastBlock(){
         return Blockchain.blocks.getLast();
     }
     public int getLength(){
-        return Blockchain.blocks.size();
+        return this.length;
+    }
+    public void setLength(int length){
+        this.length = length;
     }
     public Block getBlock(String hash){
         for (Block block:Blockchain.blocks) {
@@ -60,6 +63,7 @@ public class Blockchain {
         if (block != null) {
             if (this.getAllBlocks().size() != 0) block.setPrevHash(this.getLastBlock().getHash());
             Blockchain.blocks.add(hashBlockWithDifficulty(block));
+            this.length++;
             JsonFileManager.serialization(Blockchain.path, this);
         }
         else System.out.println("The block is NULL");
@@ -84,6 +88,9 @@ public class Blockchain {
         int length = Blockchain.blocks.size();
         boolean hashValidity = true;
         boolean chainValidity = true;
+        boolean lengthValidity = true;
+
+        if (length != this.length) lengthValidity = false;
 
         for (int i = length-1; i >= 1; i--) {
             Block block = Blockchain.blocks.get(i);
@@ -99,7 +106,7 @@ public class Blockchain {
             }
         }
 
-        return hashValidity && chainValidity;
+        return hashValidity && chainValidity && lengthValidity;
 
     }
     // this method return the amount of the first transaction or the amount existing in the blockchain
@@ -107,7 +114,7 @@ public class Blockchain {
         return blocks.get(0).getListTransaction().get(0).getAmount();
     }
     public static int getDifficulty() {
-        return difficulty;
+        return Blockchain.difficulty;
     }
     public static void setDifficulty(int difficulty) {
         if(difficulty >= 0 && difficulty <= 4) Blockchain.difficulty = difficulty;
@@ -125,5 +132,8 @@ public class Blockchain {
         block.setHash(hashObject.getHash());
         block.setNonce(nonce);
         return block;
+    }
+    public boolean isNull(){
+        return Blockchain.blocks.isEmpty();
     }
 }

@@ -1,18 +1,14 @@
 [
   {
+    "name": "Doudou",
+    "amount": 9725.677
+  },
+  {
     "name": "John",
-    "amount": 9249.977
+    "amount": 102.41
   },
   {
     "name": "Jacky",
-    "amount": 263.323
-  },
-  {
-    "name": "Doudou",
-    "amount": 388.80000000000007
-  },
-  {
-    "name": "Youyou",
-    "amount": 97.9
+    "amount": 171.913
   }
 ]

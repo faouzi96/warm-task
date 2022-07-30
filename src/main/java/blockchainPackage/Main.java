@@ -150,8 +150,17 @@ public class Main {
         boolean lunched = true;
 
         String path = readFolder();
+
+        Blockchain.setPath(path);
         changeDifficulty();
-        Blockchain blockchain = new Blockchain(path);
+
+        Blockchain blockchain = JsonFileManager.deserialization(path);
+        if(blockchain == null || blockchain.isNull()){
+            blockchain = new Blockchain();
+        }
+
+        Wallet.setListUsers(JsonFileManager.deserializationUsers(path));
+
         printHelpAssist();
 
         while (lunched){

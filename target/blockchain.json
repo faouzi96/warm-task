@@ -1,16 +1,33 @@
-[
-  {
-    "timestamp": "2022-07-30T15:33:23.217218600Z",
-    "nonce": 0,
-    "hash": "07ba22d9622e971a7c7b91fc0928c6fdf65f300d5ea2eb1192dc5f68e5e1c241",
-    "prevHash": null,
-    "transactions": [
-      {
-        "timestamp": "2022-07-30T15:33:23.215227800Z",
-        "sender": null,
-        "receiver": null,
-        "amount": 10000.0
-      }
-    ]
-  }
-]
+{
+  "length": 2,
+  "blocks": [
+    {
+      "timestamp": "2022-07-30T18:57:31.213198100Z",
+      "nonce": 3,
+      "hash": "0896e9169d784f9ddd8d88dfb690f1fa3318d7604ff398fffe248abda61e78ed",
+      "prevHash": null,
+      "transactions": [
+        {
+          "timestamp": "2022-07-30T18:57:31.210201200Z",
+          "sender": null,
+          "receiver": null,
+          "amount": 10000.0
+        }
+      ]
+    },
+    {
+      "timestamp": "2022-07-30T18:57:47.849349600Z",
+      "nonce": 5,
+      "hash": "08c33467c389e053a8ec4d6e36ccf0846fdd31ffca39f11c294f847885104229",
+      "prevHash": "0896e9169d784f9ddd8d88dfb690f1fa3318d7604ff398fffe248abda61e78ed",
+      "transactions": [
+        {
+          "timestamp": "2022-07-30T18:57:47.845875500Z",
+          "sender": "John",
+          "receiver": "Jacky",
+          "amount": 10.0
+        }
+      ]
+    }
+  ]
+}

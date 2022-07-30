@@ -7,11 +7,12 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-public class BlockAdapter extends TypeAdapter {
+public class BlockAdapter {
 
-    @Override
-    public void write(JsonWriter out, Object value) throws IOException {
+    private static void writeBlocks(JsonWriter out, Object value) throws IOException {
         Block block = (Block) value;
         out.beginObject();
 
@@ -29,52 +30,68 @@ public class BlockAdapter extends TypeAdapter {
         out.endObject();
     }
 
-    @Override
-    public Object read(JsonReader in) throws IOException {
+    public static Object read(JsonReader in) throws IOException {
 
         Block block = new Block();
+        //List of Transactions contained in a block
+        LinkedList<Block> blocks = new LinkedList<>();
 
-        in.beginObject();
-        while (in.hasNext()) {
-            if (in.peek().equals(JsonToken.NULL)){
-                in.nextNull();
+        in.beginArray();
+        while(!in.peek().equals(JsonToken.END_ARRAY)) {
+
+            in.beginObject();
+
+            while (in.hasNext()) {
+                if (in.peek().equals(JsonToken.NULL)) {
+                    in.nextNull();
+                }
+                String name = in.nextName();
+
+                switch (name) {
+
+                    case "timestamp":
+                        String next = in.nextString();
+                        block.setTimeStamp(next);
+                        continue;
+                    case "nonce":
+                        int nonce = in.nextInt();
+                        block.setNonce(nonce);
+                        continue;
+                    case "hash":
+                        next = in.nextString();
+                        block.setHash(next);
+                        continue;
+                    case "prevHash":
+                        if (in.peek() == JsonToken.NULL) {
+                            in.nextNull();
+                            block.setPrevHash(null);
+                        } else {
+                            block.setPrevHash(in.nextString());
+                        }
+                        continue;
+                    case "transactions":
+                        try {
+                            block.setTransactions(TransactionAdapter.read(in));
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
+                        continue;
+                }
             }
-            String name = in.nextName();
-
-            switch (name) {
-
-                case "timestamp":
-                    String next = in.nextString();
-                    block.setTimeStamp(next);
-                    continue;
-                case "nonce":
-                    int nonce = in.nextInt();
-                    block.setNonce(nonce);
-                    continue;
-                case "hash":
-                    next = in.nextString();
-                    block.setHash(next);
-                    continue;
-                case "prevHash":
-                    if (in.peek() == JsonToken.NULL){
-                        in.nextNull();
-                        block.setPrevHash(null);
-                    }
-                    else{
-                        block.setPrevHash(in.nextString());
-                   }
-                    continue;
-                case "transactions":
-                    try {
-                        block.setTransactions(TransactionAdapter.read(in));
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
-                    }
-                    continue;
-            }
+            in.endObject();
+            blocks.add(block);
         }
-       in.endObject();
-        return block;
+
+        in.endArray();
+        return blocks;
+    }
+
+    public static void writeArrayBlocks(JsonWriter writer, LinkedList<Block> blocks) throws IOException {
+        writer.beginArray();
+        for (Block block : blocks) {
+            BlockAdapter.writeBlocks(writer, block);
+        }
+        writer.endArray();
     }
 
 }
