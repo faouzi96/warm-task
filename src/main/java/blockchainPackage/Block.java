@@ -8,30 +8,27 @@ public class Block extends Exception{
     private String prevHash;
     private String hash;
     private String timeStamp;
+    private int nonce;
     private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
-    public Block(Transaction transaction) throws NoSuchAlgorithmException {
+    public Block(Transaction transaction) {
+        this.nonce = 0;
         this.prevHash = null;
         this.transactions.add(transaction);
-        Hash256 hashObject = new Hash256(this.transactions.toString());
-        this.hash = hashObject.getHash();
         this.timeStamp = (Instant.now()).toString();
     }
     //This constructor created just for the deserialization purpose
-    public Block() throws NoSuchAlgorithmException {}
+    public Block(){}
     public String getHash(){
         return this.hash;
     }
     public String getPrevHash(){
         return this.prevHash;
     }
-    public boolean addTransaction(Transaction transaction) throws NoSuchAlgorithmException {
+    public boolean addTransaction(Transaction transaction) {
         if(this.transactions.size() >= 10) return false;
         else{
             this.transactions.add(transaction);
-            Hash256 hashObject = new Hash256(this.transactions.toString());
-            System.out.println(hashObject.getHash());
-            this.hash = hashObject.getHash();
             return true;
         }
     }
@@ -52,5 +49,11 @@ public class Block extends Exception{
     }
     public void setTransactions(ArrayList transactions){
         this.transactions = transactions;
+    }
+    public void setNonce(int nonce){
+        this.nonce = nonce;
+    }
+    public int getNonce() {
+        return nonce;
     }
 }

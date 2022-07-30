@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "timestamp": "2022-07-30T15:33:23.217218600Z",
+    "nonce": 0,
+    "hash": "07ba22d9622e971a7c7b91fc0928c6fdf65f300d5ea2eb1192dc5f68e5e1c241",
+    "prevHash": null,
+    "transactions": [
+      {
+        "timestamp": "2022-07-30T15:33:23.215227800Z",
+        "sender": null,
+        "receiver": null,
+        "amount": 10000.0
+      }
+    ]
+  }
+]

@@ -8,23 +8,18 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
-public class BlockAdapter extends TypeAdapter {
-
+public class BlockchainAdapter extends TypeAdapter {
     @Override
     public void write(JsonWriter out, Object value) throws IOException {
-        Block block = (Block) value;
+        Blockchain blockchain = (Blockchain) value;
         out.beginObject();
 
-        out.name("timestamp");
-        out.value(block.getTimeStamp());
-        out.name("nonce");
-        out.value(block.getNonce());
-        out.name("hash");
-        out.value(block.getHash());
-        out.name("prevHash");
-        out.value(block.getPrevHash());
-        out.name("transactions");
-        TransactionAdapter.writeArrayTransactions(out, block.getListTransaction());
+        out.name("length");
+        out.value(blockchain.getLength());
+        out.name("difficulty");
+        out.value(Blockchain.getDifficulty());
+        out.name("blocks");
+        BlockAdapter.writeArrayTransactions(out, block.getListTransaction());
 
         out.endObject();
     }
@@ -43,26 +38,13 @@ public class BlockAdapter extends TypeAdapter {
 
             switch (name) {
 
-                case "timestamp":
+                case "length":
                     String next = in.nextString();
                     block.setTimeStamp(next);
                     continue;
-                case "nonce":
+                case "difficulty":
                     int nonce = in.nextInt();
                     block.setNonce(nonce);
-                    continue;
-                case "hash":
-                    next = in.nextString();
-                    block.setHash(next);
-                    continue;
-                case "prevHash":
-                    if (in.peek() == JsonToken.NULL){
-                        in.nextNull();
-                        block.setPrevHash(null);
-                    }
-                    else{
-                        block.setPrevHash(in.nextString());
-                   }
                     continue;
                 case "transactions":
                     try {
@@ -73,8 +55,7 @@ public class BlockAdapter extends TypeAdapter {
                     continue;
             }
         }
-       in.endObject();
+        in.endObject();
         return block;
     }
-
 }

@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "name": "John",
+    "amount": 9249.977
+  },
+  {
+    "name": "Jacky",
+    "amount": 263.323
+  },
+  {
+    "name": "Doudou",
+    "amount": 388.80000000000007
+  },
+  {
+    "name": "Youyou",
+    "amount": 97.9
+  }
+]

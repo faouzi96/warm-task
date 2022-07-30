@@ -42,6 +42,8 @@ public class User {
     public Transaction send(double amount, String receiverName) throws NoSuchAlgorithmException, IOException {
         //Get the User object from the Name of the user
         User receiver = Wallet.getUser(receiverName);
+        //The user does not exist
+        if (receiver == null) return null;
         //If the amount is not enough or lesser than the cost of the operation
         if(this.amount < amount) {
             System.out.println("The user does not have enough money to do this transaction");
