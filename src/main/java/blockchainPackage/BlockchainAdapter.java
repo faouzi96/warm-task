@@ -2,11 +2,11 @@ package blockchainPackage;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 
 public class BlockchainAdapter extends TypeAdapter {
     @Override
@@ -24,13 +24,8 @@ public class BlockchainAdapter extends TypeAdapter {
 
     @Override
     public Blockchain read(JsonReader in) throws IOException {
-
-        Blockchain blockchain = null;
-        try {
-            blockchain = new Blockchain();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        LinkedList<Block> blocks = new LinkedList<>();
+        Blockchain blockchain = new Blockchain(1);
 
         in.beginObject();
         while (in.hasNext()) {
@@ -43,12 +38,14 @@ public class BlockchainAdapter extends TypeAdapter {
                     blockchain.setLength(length);
                     continue;
                 case "blocks":
-                    blockchain.setAllBlocks(BlockAdapter.read(in));
+                    blocks.addAll(BlockAdapter.read(in));
+                    System.out.println(blocks.get(1).getNonce());
+                    System.out.println(blocks.get(2).getNonce());
+                    blockchain.setAllBlocks(blocks);
                     continue;
             }
         }
         in.endObject();
-        System.out.println(blockchain.getGenesisBlock().getNonce());
         return blockchain;
     }
 }

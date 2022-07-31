@@ -30,13 +30,12 @@ public class BlockAdapter {
 
     public static LinkedList<Block> read(JsonReader in) throws IOException {
 
-        Block block = new Block();
         //List of Transactions contained in a block
         LinkedList<Block> blocks = new LinkedList<>();
 
         in.beginArray();
         while(!in.peek().equals(JsonToken.END_ARRAY)) {
-
+            Block block = new Block();
             in.beginObject();
 
             while (in.hasNext()) {
@@ -68,6 +67,7 @@ public class BlockAdapter {
                     case "transactions":
                         try {
                             block.setTransactions(TransactionAdapter.read(in));
+                            blocks.add(block);
                         } catch (NoSuchAlgorithmException e) {
                             throw new RuntimeException(e);
                         }
@@ -76,10 +76,8 @@ public class BlockAdapter {
             }
             in.endObject();
             System.out.println(block.getNonce());
-            blocks.add(block);
         }
         in.endArray();
-
         return blocks;
     }
 

@@ -36,7 +36,7 @@ public class JsonFileManager {
         builder.serializeNulls();
         Gson gson = builder.create();
         Blockchain blockchain = null;
-        blockchain = gson.fromJson(readJsonFile(filePath,"blockchain"), Blockchain.class);
+        blockchain = (Blockchain) gson.fromJson(readJsonFile(filePath,"blockchain"), Blockchain.class);
         return  blockchain;
     }
 

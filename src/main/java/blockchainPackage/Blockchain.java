@@ -18,6 +18,8 @@ public class Blockchain {
             this.length = 0;
             this.addBlock(new Block(new Transaction(null,null,10000.0)));
     }
+    //Deserialization purpose
+    public Blockchain(int deserialization){}
     public static String getPath() {
         return Blockchain.path;
     }
@@ -33,7 +35,7 @@ public class Blockchain {
         return Blockchain.blocks;
     }
     public void setAllBlocks(LinkedList<Block> blocks){
-        Blockchain.blocks = blocks;
+        Blockchain.blocks.addAll(blocks);
     }
 
     public Block getLastBlock(){
