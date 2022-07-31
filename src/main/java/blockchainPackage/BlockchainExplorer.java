@@ -20,6 +20,7 @@ public class BlockchainExplorer {
             System.out.println("\t\t - Timestamp: " + block.getTimeStamp());
             System.out.println("\t\t - Hash: " + block.getHash());
             System.out.println("\t\t - Prev Hash: " + block.getPrevHash());
+            System.out.println("\t\t - Nonce: " + block.getNonce());
             System.out.println("\t\t - Transactions List: \n");
             for (Transaction transaction : block.getListTransaction()) {
                 System.out.println("\t\t\t - Transaction:____________________________________");
@@ -45,6 +46,7 @@ public class BlockchainExplorer {
             System.out.println("\t\t - Timestamp: " + block.getTimeStamp());
             System.out.println("\t\t - Hash: " + block.getHash());
             System.out.println("\t\t - Prev Hash: " + block.getPrevHash());
+            System.out.println("\t\t - Nonce: " + block.getNonce());
             System.out.println("\t\t - Transactions List: \n");
             for (Transaction transaction : block.getListTransaction()) {
                 System.out.println("\t\t\t - Transaction:____________________________________");

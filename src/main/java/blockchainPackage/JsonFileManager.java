@@ -47,8 +47,7 @@ public class JsonFileManager {
         File myData = new File(filePath+type+".json");
         // If the file does not exist already we're gonna create it
         if (!myData.exists()) {
-            if(type.equals("users")) writeJsonFile(filePath+type+".json","[]");
-            else writeJsonFile(filePath+type+".json","{}");
+            writeJsonFile(filePath+type+".json","");
             myData = new File(filePath+type+".json");
         }
         Scanner myReader = null;

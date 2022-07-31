@@ -75,7 +75,6 @@ public class BlockAdapter {
                 }
             }
             in.endObject();
-            System.out.println(block.getNonce());
         }
         in.endArray();
         return blocks;

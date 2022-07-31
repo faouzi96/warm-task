@@ -70,6 +70,7 @@ public class Blockchain {
             if (this.getAllBlocks().size() != 0) block.setPrevHash(this.getLastBlock().getHash());
             Blockchain.blocks.add(hashBlockWithDifficulty(block));
             this.length++;
+            JsonFileManager.serialization(Blockchain.getPath(), this);
         }
         else System.out.println("The block is NULL");
     }

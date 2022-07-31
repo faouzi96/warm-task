@@ -39,8 +39,6 @@ public class BlockchainAdapter extends TypeAdapter {
                     continue;
                 case "blocks":
                     blocks.addAll(BlockAdapter.read(in));
-                    System.out.println(blocks.get(1).getNonce());
-                    System.out.println(blocks.get(2).getNonce());
                     blockchain.setAllBlocks(blocks);
                     continue;
             }
