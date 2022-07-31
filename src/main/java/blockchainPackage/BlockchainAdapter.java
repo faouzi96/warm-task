@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.LinkedList;
 
 public class BlockchainAdapter extends TypeAdapter {
     @Override
@@ -24,7 +23,7 @@ public class BlockchainAdapter extends TypeAdapter {
     }
 
     @Override
-    public Object read(JsonReader in) throws IOException {
+    public Blockchain read(JsonReader in) throws IOException {
 
         Blockchain blockchain = null;
         try {
@@ -35,23 +34,21 @@ public class BlockchainAdapter extends TypeAdapter {
 
         in.beginObject();
         while (in.hasNext()) {
-            if (in.peek().equals(JsonToken.NULL)){
-                in.nextNull();
-            }
+
             String name = in.nextName();
 
             switch (name) {
-
                 case "length":
                     int length = in.nextInt();
                     blockchain.setLength(length);
                     continue;
                 case "blocks":
-                    blockchain.setAllBlocks((LinkedList) BlockAdapter.read(in));
+                    blockchain.setAllBlocks(BlockAdapter.read(in));
                     continue;
             }
         }
         in.endObject();
+        System.out.println(blockchain.getGenesisBlock().getNonce());
         return blockchain;
     }
 }

@@ -1,13 +1,11 @@
 package blockchainPackage;
 
-import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class BlockAdapter {
@@ -30,7 +28,7 @@ public class BlockAdapter {
         out.endObject();
     }
 
-    public static Object read(JsonReader in) throws IOException {
+    public static LinkedList<Block> read(JsonReader in) throws IOException {
 
         Block block = new Block();
         //List of Transactions contained in a block
@@ -42,9 +40,7 @@ public class BlockAdapter {
             in.beginObject();
 
             while (in.hasNext()) {
-                if (in.peek().equals(JsonToken.NULL)) {
-                    in.nextNull();
-                }
+
                 String name = in.nextName();
 
                 switch (name) {
@@ -79,10 +75,11 @@ public class BlockAdapter {
                 }
             }
             in.endObject();
+            System.out.println(block.getNonce());
             blocks.add(block);
         }
-
         in.endArray();
+
         return blocks;
     }
 

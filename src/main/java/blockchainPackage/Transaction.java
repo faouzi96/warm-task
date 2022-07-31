@@ -33,14 +33,4 @@ public class Transaction {
         this.timestamp = timestamp;
     }
 
-    //// The next methods are not used in this application
-    public void setSender(User sender){
-         this.sender = sender;
-    }
-    public void setReceiver(User receiver){
-        this.receiver = receiver;
-    }
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
 }

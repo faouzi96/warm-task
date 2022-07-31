@@ -17,33 +17,36 @@ public class Blockchain {
     public Blockchain() throws NoSuchAlgorithmException, IOException {
             this.length = 0;
             this.addBlock(new Block(new Transaction(null,null,10000.0)));
-            JsonFileManager.serialization(Blockchain.path,this);
     }
-
     public static String getPath() {
         return Blockchain.path;
     }
     public static void setPath(String path){
         Blockchain.path = path;
     }
+
     public Block getGenesisBlock(){
         return Blockchain.blocks.getFirst();
     }
+
     public LinkedList<Block> getAllBlocks(){
         return Blockchain.blocks;
     }
-    public void setAllBlocks(LinkedList blocks){
+    public void setAllBlocks(LinkedList<Block> blocks){
         Blockchain.blocks = blocks;
     }
+
     public Block getLastBlock(){
         return Blockchain.blocks.getLast();
     }
+
     public int getLength(){
         return this.length;
     }
     public void setLength(int length){
         this.length = length;
     }
+
     public Block getBlock(String hash){
         for (Block block:Blockchain.blocks) {
             if(block.getHash().equals(hash)){
@@ -58,13 +61,13 @@ public class Blockchain {
         }
         return null;
     }
+
     //After adding any block to the blockchain we serialize it and save it in the JSON file
     public void addBlock(Block block) throws IOException, NoSuchAlgorithmException {
         if (block != null) {
             if (this.getAllBlocks().size() != 0) block.setPrevHash(this.getLastBlock().getHash());
             Blockchain.blocks.add(hashBlockWithDifficulty(block));
             this.length++;
-            JsonFileManager.serialization(Blockchain.path, this);
         }
         else System.out.println("The block is NULL");
     }
@@ -82,8 +85,9 @@ public class Blockchain {
         }
         return transactions;
     }
-    // This method check if the previous Hash of any block match with the previous block's hash and the if the
-    // the block Hash is valid ( create new hash using the nonce of the block)
+    // This method check if the previous Hash of any block match with the previous block's hash, if the
+    // the block Hash is valid ( create new hash using the nonce of the block) and if the length of
+    // the blockchain is correct
     public boolean blockchainCheckValidity() throws NoSuchAlgorithmException {
         int length = Blockchain.blocks.size();
         boolean hashValidity = true;
@@ -133,7 +137,5 @@ public class Blockchain {
         block.setNonce(nonce);
         return block;
     }
-    public boolean isNull(){
-        return Blockchain.blocks.isEmpty();
-    }
+
 }

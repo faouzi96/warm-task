@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class Main {
-    public static void printHelpAssist(){
+    public static void printHelpAssist() {
         System.out.println("0 - Help --> See the commands");
         System.out.println("----------------------------Blockchain Explorer---------------------------------");
         System.out.println("1 - Last block");
@@ -37,15 +37,14 @@ public class Main {
         System.out.println("Type the new user's name: ");
         String name = scanner.nextLine();
         User newUser = new User(name);
-        System.out.println("User: "+ newUser.getName() + " created successfully");
+        System.out.println("User: " + newUser.getName() + " created successfully");
     }
     public static void mineBlock(Blockchain blockchain, Block block) throws IOException, NoSuchAlgorithmException {
         if (block != null) {
             System.out.println("Mine the block: ");
             blockchain.addBlock(block);
             System.out.println("The block is mined successfully");
-        }
-        else{
+        } else {
             System.out.println("There is no block to mine");
         }
     }
@@ -60,12 +59,12 @@ public class Main {
         System.out.println("Amount: ");
         Scanner scanDouble = new Scanner(System.in);
         double amount = Double.parseDouble(scanDouble.nextLine());
-        while (amount <= 0){
+        while (amount <= 0) {
             System.out.println("The amount should be greater than 0");
             amount = Double.parseDouble(scanDouble.nextLine());
         }
-        User user1 = Wallet.getUser(sender);
-        if (Wallet.checkUserExistence(sender) || Wallet.checkUserExistence(receiver)) {
+        if (Wallet.checkUserExistence(sender) && Wallet.checkUserExistence(receiver)) {
+            User user1 = Wallet.getUser(sender);
             Transaction transaction = user1.send(amount, receiver);
             if (transaction != null) {
                 if (block == null) {
@@ -86,13 +85,12 @@ public class Main {
                 System.out.println("The balance of the user is not sufficient for this operation");
                 Wallet.printAmount(sender);
             }
-        }
-        else System.out.println("The Sender or the Receiver does not exist");
+        } else System.out.println("The Sender or the Receiver does not exist");
         return block;
     }
-    public static String readFolder(){
+    public static String readFolder() {
         Scanner scanner = new Scanner(System.in);
-        String path="";
+        String path = "";
         boolean pathExist = false;
         do {
             System.out.println("Enter the Blockchain Folder Path: ");
@@ -100,49 +98,50 @@ public class Main {
             File file = new File(path);
             pathExist = file.exists();
             if (!pathExist) System.out.println("Directory not found");
-        }while(!pathExist);
+        } while (!pathExist);
         return path;
     }
-    public static void changeDifficulty(){
+    public static void changeDifficulty() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Change the difficulty: ");
         System.out.println("Blockchain Difficulty right now: " + Blockchain.getDifficulty());
         System.out.println("Enter the difficulty: (If you do not want to change it. Enter the same number as the previous)");
-        int difficulty = (Integer) scanner.nextInt();
-        while ((difficulty > 4 || difficulty < 0)){
+        int difficulty = scanner.nextInt();
+        while ((difficulty > 4 || difficulty < 0)) {
             System.out.println("The difficulty should be in the interval [0,4]");
             System.out.println("Enter the difficulty: (If you do not want to change it. Enter the same number as the previous)");
-            difficulty = (Integer) scanner.nextInt();
+            difficulty = scanner.nextInt();
         }
         Blockchain.setDifficulty(difficulty);
         System.out.println("Blockchain difficulty has changed successfully");
     }
-    public static void getBlockByHeight(Blockchain blockchain){
+    public static void getBlockByHeight(Blockchain blockchain) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the Height of the block:");
         int height = scanner.nextInt();
-        BlockchainExplorer.printBlockDetails(height,blockchain);
+        BlockchainExplorer.printBlockDetails(height, blockchain);
     }
-    public static void getBlockByHash(Blockchain blockchain){
+    public static void getBlockByHash(Blockchain blockchain) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the Hash of the block:");
         String hash = scanner.nextLine();
-        BlockchainExplorer.printBlockDetails(hash,blockchain);
+        BlockchainExplorer.printBlockDetails(hash, blockchain);
     }
     public static void validityChecker(Blockchain blockchain) throws NoSuchAlgorithmException {
-        if(blockchain.blockchainCheckValidity()) System.out.println("Blockchain is valid");
+        if (blockchain.blockchainCheckValidity()) System.out.println("Blockchain is valid");
         else System.out.println("Blockchain not valid");
     }
-    public static void userAmount(){
+    public static void userAmount() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the user's name: ");
         Wallet.printAmount(scanner.nextLine());
     }
-    public static void userTransactions(){
+    public static void userTransactions() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the user's name: ");
         Wallet.printUserListTransactions(scanner.nextLine());
     }
+
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
         Scanner scanner = new Scanner(System.in);
@@ -154,19 +153,20 @@ public class Main {
         Blockchain.setPath(path);
         changeDifficulty();
 
+        Wallet.setListUsers(JsonFileManager.deserializationUsers(path));
+
         Blockchain blockchain = JsonFileManager.deserialization(path);
-        if(blockchain == null || blockchain.isNull()){
+
+        if (blockchain == null) {
             blockchain = new Blockchain();
         }
 
-        Wallet.setListUsers(JsonFileManager.deserializationUsers(path));
-
         printHelpAssist();
 
-        while (lunched){
+        while (lunched) {
             System.out.println("Type the command number: ");
             int order = scanner.nextInt();
-            switch (order){
+            switch (order) {
                 case 0:
                     printHelpAssist();
                     continue;
@@ -212,7 +212,8 @@ public class Main {
                     changeDifficulty();
                     continue;
                 case 99:
-                    if(block != null) mineBlock(blockchain,block);
+                    if (block != null) mineBlock(blockchain, block);
+                    JsonFileManager.serialization(Blockchain.getPath(), blockchain);
                     lunched = false;
                     continue;
             }

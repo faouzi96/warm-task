@@ -79,10 +79,9 @@ public class JsonFileManager {
         return json;
     }
 
-
     // Serialize our object and write into a file using the filePath path, and finally
     // Return a string with the content of our file
-    public static String serializationUser(String filePath) throws IOException {
+    public static String serializationUser(String filePath) {
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
         builder.setPrettyPrinting();
@@ -96,7 +95,6 @@ public class JsonFileManager {
     // Read the file from the passed path, deserialize it transforms it into an object and
     // return this last one
     public static ArrayList<User> deserializationUsers(String filePath) {
-        System.out.println(filePath);
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(User.class, new UserAdapter());
         builder.serializeNulls();
